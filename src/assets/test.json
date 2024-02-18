@@ -1,0 +1,32 @@
+{
+    "products": [
+        {
+            "title": "testTitle",
+            "description":"testDescription",
+            "prise":"15000",
+            "discount":"15%",
+            "isHas":true,
+            "sailer":"testUser",
+            "img":[
+                "path1",
+                "path2",
+                "path3",
+                "path4"
+            ]
+        },
+        {
+            "title": "testTitle2",
+            "description":"testDescription2",
+            "prise":"15000",
+            "discount":"15%",
+            "isHas":true,
+            "sailer":"testUser2",
+            "img":[
+                "path12",
+                "path22",
+                "path32",
+                "path42"
+            ]
+        }
+    ]
+}
