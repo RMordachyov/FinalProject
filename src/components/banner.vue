@@ -1,5 +1,90 @@
 <template>
-    <main>
-        banner
+    <main class="conteiner">
+        <div class="row">
+            <div class="col-md-6 banner_col">
+                <div class="banner_col_1_container">
+                    <h1>Большой заголовок</h1>
+                    <p>небольшой слоган</p>
+                    <div class="banner_buttons_container">
+                        <a href="#" class="banner_button button_to">К товарам</a>
+                        <a href="#" class="banner_button button_about">О проекте</a>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="col-md-6 banner_col">
+                <div class="banner_col_2_container"></div>
+            </div>
+        </div>
+        
     </main>
 </template>
+
+<style scoped>
+*{
+    padding:0;
+    margin: 0;
+    box-sizing: border-box;
+    /* border: 1px solid #000; */
+}
+
+.banner_col_1_container{
+    position: absolute;
+    padding: 40px;
+    min-width: 300px;
+    max-width: 80%;
+    border: 1px solid #fc0000;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+.banner_col{
+    height: 440px;
+    position: relative;
+    
+}
+
+.banner_col_2_container{
+    box-shadow: inset 0px 0px 5px 30px rgb(255, 253, 253);
+    background-image: url('../img/gor.jpg');
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+}
+.banner_buttons_container{
+    
+    padding: 15px 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 30px;
+}
+.banner_button{
+    padding: 8px 30px;
+    border-radius: 6px;
+    /* margin-left: 30px; */
+    background-color: rgba(33, 167, 0, 0.74);
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 0px 3px #00000071;
+    text-align: center;
+}
+
+@media (max-width:992px) {
+    .banner_col_1_container{
+        padding: 5px;
+    }
+}
+@media (max-width:320px) {
+    .banner_button{
+    padding: 4px 20px;
+}
+}
+
+</style>
