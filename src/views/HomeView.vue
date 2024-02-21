@@ -1,5 +1,8 @@
 <template>
   <main class="HomeView">
+    <div class="fluid-container banner">
+    <banner />
+</div>
     <CategoriProductsComponent />
     
   </main>
@@ -10,6 +13,7 @@
 // import jsonData from '../assets/test.json'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import CategoriProductsComponent from '../components/CategoriProductsComponent.vue'
+import banner from '../components/Banner.vue'
 
 export default{
   data(){
@@ -29,7 +33,7 @@ export default{
     }
   },
   components:{
-    CategoriProductsComponent
+    CategoriProductsComponent,banner
   }
 }
 </script>
@@ -38,6 +42,15 @@ export default{
 .HomeView{
   background-color: #FAFAFF;
   min-height: 550px;
-  padding: 15px 0px;
+}
+
+.banner{
+    height: 100%;
+    border: 1px solid #0000004d;
+    border-radius: 5px;
+    /* box-shadow: inset 0px 0px 5px 30px rgb(255, 253, 253); */
+    background: url('../img/gor.jpg') no-repeat 0px 25%;
+    background-size: 100%;
+    padding: 0px;
 }
 </style>

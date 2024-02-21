@@ -1,6 +1,3 @@
-<script setup>
-import banner from './Banner.vue'
-</script>
 
 <template>
     <main>
@@ -13,47 +10,44 @@ import banner from './Banner.vue'
                             <span>NameOfNo</span>
                         </div>
                         <div class="logo2">
-                            <img src="../img/logo2.png" alt="logo2">
+                            <img src="../img/logo.png" alt="logo2">
                         </div>
                     </div>
                     <div class="tabs col-lg-6">
                         <div class="top-menu">
                             <ul>
-                                <li><a href="#">Продукция</a></li>
-                                <li><a href="#">О компании</a></li>
-                                <li><a href="#">Каталог товаров</a></li>
+                                <li><router-link to="/">Продукция</router-link></li>
+                                <li><router-link to="about">О компании</router-link></li>
+                                <li><router-link to="product">Каталог товаров</router-link></li>
                             </ul>
                         </div>
                     </div>
                     <div class="tools col-lg-3">
                         <div class="tools-content">
                             <img src="../img/Login.png" alt="user">
-                            <img src="../img/cart.png" alt="mail">
+                            <router-link to="/cart"><img src="../img/cart.png" alt="cart"></router-link>
+                            
                         </div>
                         
                     </div>
                 </div>
             </div>
         </div> 
-        <div class="fluid-container banner">
-            <banner />
-        </div>
+        
         
     </main>
 </template>
 
+
+
+
 <style scoped>
 
-.banner{
-    height: 100%;
-    border: 1px solid #0000004d;
-    border-radius: 5px;
-}
 
 .top-header{
     padding: 15px 0;
-    border: 1px solid #0000004d;
-    border-radius: 10px;
+    margin-bottom: 15px;
+    
 }
 
 .tabs {

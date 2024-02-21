@@ -7,3 +7,32 @@
     /* border: 1px solid #000; */
 }
 
+::-webkit-scrollbar {
+    width: 5px;
+    background:rgba(0,0,0,0.1);
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background:rgba(0,0,0,0.4);
+} 
+::-webkit-scrollbar:horizontal{
+  height: 5px;
+}
+::-webkit-scrollbar-thumb:horizontal{
+    border-radius: 15px;
+    background:rgba(0,0,0,0.4);      
+}
+
+.adding_user{
+    font-size: 13px;
+    color: lightgrey;
+    background:white url(../img/User.png) no-repeat 0 3px;
+    padding-left: 22px;
+    display: flex;
+    align-items: stretch;
+}
