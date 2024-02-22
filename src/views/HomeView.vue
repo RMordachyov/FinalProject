@@ -3,28 +3,31 @@
     <div class="fluid-container banner">
     <banner />
 </div>
-    <CategoriProductsComponent />
-    
+    <CategoriProductsComponent v-for="categori in g_categoriList" :categori="categori"/>
+    <p>{{ categori }}</p>
   </main>
 </template>
 
 
 <script >
 // import jsonData from '../assets/test.json'
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import CategoriProductsComponent from '../components/CategoriProductsComponent.vue'
 import banner from '../components/Banner.vue'
+import { computed } from 'vue'
 
 export default{
   data(){
     return{
-      exData: {}
+      exData: {},
+      
     }
-    
   },
   computed:{
+    ...mapState(['st_CategoriList']),
+    ...mapGetters(['g_categoriList']),
     chDate(){
-     return this.exData = this.$store.state.productsList.products[0]
+     return this.exData = this.$store.state.st_productsList.products[0]
     }
   },
   methods:{

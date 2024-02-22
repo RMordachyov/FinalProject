@@ -4,22 +4,40 @@
             <img src="../img/test.png" alt="mainImg">
         </div>
         <div class="product_description">
-            <p>Product Description</p>
+            <p>{{ product.testTitle }}</p>
         </div>
         <div class="product_price_container">
             <div class="price">
-                <h2>27 000т</h2>
+                <h2>{{ product.prise }}</h2>
             </div>
             <div class="add_to_cart">
                 <div href="#" class="add_to_cart_button">+</div>
             </div>
         </div>
         <div class="adding_user">
-            <p>TestUser</p>
+            <p>{{ product.sailer }}</p>
         </div>
     </main>
 </template>
 
+<script>
+import { mapState, mapMutations, mapActions } from 'vuex'
+export default{
+    data(){
+        return{
+           
+        }
+    },
+    computed:{
+    },
+    props:[
+        'product'
+    ],
+    components:{
+        
+    }
+}
+</script>
 
 <style scoped>
 *{

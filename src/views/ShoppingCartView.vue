@@ -87,10 +87,12 @@ export default{
 }
 
 .order-border-price{
+    min-width: 290px;
     height: 320px;
     background-color: white;
     border-radius: 10px;
     padding: 30px 15px;
+
 }
 .order-border-price table{
     margin-top: 20px;

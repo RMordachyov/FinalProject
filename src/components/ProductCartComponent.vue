@@ -19,11 +19,16 @@
             </div>
         </div>
         <div class="product-cart-price  col-lg-3">
+            <div class="product-cart-actions">
+                <a href=""><img  src="../img/Heart.png" alt=""></a>
+                <a href="" ><img src="../img/Frame 825.png" alt=""></a>
+            </div>
             <div class="product-cart-price-total">
                 <h4>15 000t</h4>
-                <h5><del>20 000t</del></h5>
+                <h5><del>0</del></h5>
             </div>
             <div class="product-cart-price-count">
+                
                 <a href="#">-</a>
                 <a href="#">1</a>
                 <a href="#">+</a>
@@ -38,16 +43,21 @@
 *{
     /* border: 1px solid #000; */
 }
-
+.product-cart-actions{
+    margin-bottom: 15px;
+}
+.product-cart-actions a:first-child{
+    margin-right: 20px;
+}
 .product-cart-price {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    padding: 30px 20px;
+    padding: 10px 20px;
     text-align: right;
 }
 .product-cart-price-total{
-    padding: 20px;
+    padding: 5px;
     text-align: right;
 }
 .product-cart-price-count a{

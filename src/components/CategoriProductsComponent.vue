@@ -1,40 +1,27 @@
 <template>
     <main class="container categori_products_component">
         <div class="categori_products_component">
-            <h3>Тут название категории</h3>
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-        </div>
-        <div class="categori_products_component">
-            <h3>Тут название категории</h3>
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-        </div>
-        <div class="categori_products_component">
-            <h3>Тут название категории</h3>
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
-            <ProductsComponent />
+            <h3>{{ categori.categori }}</h3>
+            <ProductsComponent v-for="(product, index) in categori.products" :product="product" :key="index"/>
         </div>
     </main>
 </template>
 
 <script>
+// 
+import { mapState, mapMutations, mapActions } from 'vuex'
 import ProductsComponent from '../components/ProductComponent.vue'
 export default{
     data(){
         return{
-
+           
         }
     },
+    computed:{
+    },
+    props:[
+        'categori'
+    ],
     components:{
         ProductsComponent
     }
