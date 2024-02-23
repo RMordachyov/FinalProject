@@ -11,7 +11,7 @@
                 <h2>{{ Number(product.price).toLocaleString("ru-RU") }} &#8376</h2>
             </div>
             <div class="add_to_cart">
-                <div href="#" class="add_to_cart_button">+</div>
+                <div href="#" class="add_to_cart_button" @click="addToCart">+</div>
             </div>
         </div>
         <div class="adding_user">
@@ -39,6 +39,14 @@ export default{
     props:[
         'product'
     ],
+    methods:{
+        addToCart(e){
+            e.preventDefault()
+            console.log("home comp")
+            console.log(this.product)
+            this.$store.commit('AddProductToCart', this.product)
+        }
+    },
     components:{
         
     }

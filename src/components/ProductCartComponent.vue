@@ -4,11 +4,11 @@
             <div class="product-cart-description col-lg-9">
             <input type="checkbox" name="selectProduct" class="selectProduct">
             <div class="product-cart-img">
-                <img src="../img/test.png" alt="">
+                <img :src="img_src" alt="">
             </div>
             <div class="product-cart-description-info">
-                <div class="product-cart-description-title"><h5>Первое дерево</h5></div>
-                <div class="product-cart-status"><span>В наличии</span></div>
+                <div class="product-cart-description-title"><h5>{{ product.description }}</h5></div>
+                <div class="product-cart-status"><span>{{ isHas }}</span></div>
                 <div class="product-cart-color">
                     <div class="product-cart-color-pin"></div>
                     <span>Зелёная</span>
@@ -20,12 +20,12 @@
         </div>
         <div class="product-cart-price  col-lg-3">
             <div class="product-cart-actions">
-                <a href=""><img  src="../img/Heart.png" alt=""></a>
-                <a href="" ><img src="../img/Frame 825.png" alt=""></a>
+                <a ><img  src="../img/Heart.png" alt=""></a>
+                <a href="#" @click="deleteProductFromCart"><img src="../img/Frame 825.png" alt=""></a>
             </div>
             <div class="product-cart-price-total">
-                <h4>15 000t</h4>
-                <h5><del>0</del></h5>
+                <h4>{{ Number(product.price).toLocaleString("ru-RU")}} &#8376</h4>
+                <h5><del>{{ (Number(product.price)+(product.price*product.discount)).toLocaleString("ru-RU")}} &#8376</del></h5>
             </div>
             <div class="product-cart-price-count">
                 
@@ -38,6 +38,45 @@
       
     </main>
 </template>
+
+<script>
+import { mapState, mapMutations, mapActions } from 'vuex'
+export default{
+    data(){
+        return{
+        }
+    },
+    computed:{
+        img_src(){
+            if(this.product.img == "" || this.product.img == "noPhoto"){
+                return 'src/img/noPhoto.png'
+            }else{
+                return 'src/img/products/'+this.product.img
+            }
+        }, 
+        isHas(){
+            if(this.product.isHas){
+                return 'В наличии'
+            }else{
+                return 'Нет на складе'
+            }
+        }
+    },
+    props:[
+        'product'
+    ],
+    methods:{
+        deleteProductFromCart(e){
+            e.preventDefault()
+            this.$store.commit('deleteProductFromCart', [this.product])
+        }
+    },
+    components:{
+       
+    }
+    
+}
+</script>
 
 <style scoped>
 *{

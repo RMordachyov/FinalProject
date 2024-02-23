@@ -12,9 +12,7 @@
                     <a class="delete-button">Удалить</a>
                 </div>
                 <div class="product-list">
-                    <ProductCartComponent />
-                    <ProductCartComponent />
-                    <ProductCartComponent />
+                    <ProductCartComponent v-for="product in getCart" :product="product"/>
                 </div>
             </div>
             <div class="order-detail col-lg-3">
@@ -49,8 +47,12 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import ProductCartComponent from '../components/ProductCartComponent.vue'
 export default{
+    computed:{
+        ...mapGetters(['getCart']),
+    },
     components:{
         ProductCartComponent
     }

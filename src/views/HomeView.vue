@@ -31,9 +31,7 @@ export default{
     }
   },
   methods:{
-    test(){
-      console.log(jsonData.products[0])
-    }
+    
   },
   components:{
     CategoriProductsComponent,banner

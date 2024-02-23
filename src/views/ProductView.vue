@@ -80,6 +80,7 @@ export default{
         },
         addToCart(e){
             e.preventDefault()
+            console.log("prod view")
             this.$store.commit('AddProductToCart', this.getProduct)
         }
     }

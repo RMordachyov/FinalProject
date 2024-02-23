@@ -9,7 +9,7 @@ export default createStore({
           "title": "Туя",
           "description":"Туя Алматинская(нет)",
           "price":"15000",
-          "discount":"15%",
+          "discount":"0.15",
           "isHas":false,
           "sailer":"testUser",
           "categori":"Горячее",
@@ -20,7 +20,7 @@ export default createStore({
           "title": "testTitle2",
           "description":"testDescription2",
           "price":"15000",
-          "discount":"15%",
+          "discount":"0.15",
           "isHas":true,
           "sailer":"testUser2",
           "categori":"Предложения",
@@ -31,7 +31,7 @@ export default createStore({
         "title": "testTitle3",
         "description":"testDescription3",
         "price":"150000",
-        "discount":"15%",
+        "discount":"0.15",
         "isHas":false,
         "sailer":"testUser3",
         "categori":"Основные товары",
@@ -93,20 +93,34 @@ export default createStore({
       console.log(state.cart.length)
       console.log(state.cart)
       return state.cart.length
+    },
+    getCart(state){
+      return state.cart
     }
   },
   mutations:{
     AddProductToCart(state,payload){
-      console.log(state.cart.length+1)
-      console.log(state.cart)
-      state.cart.push(payload)
+      if(state.cart.length ==0){
+        state.cart.push(payload)
+      }else{
+        // console.log(element)
+        if(state.cart.find(e => e.id === payload.id) == undefined){
+          state.cart.push(payload)
+        }else{
+          return alert("Вы уже добавили в корзину товар " + payload.description)
+        }
+      }
+      
     },
     deleteProductFromCart(state,payload){
-      let obj = state.cart.find(e => e.id === id);
-      let i = state.cart.indexOf(obj);
-      if(i >= 0) {
-        state.cart.splice(i,1);
-      }
+      payload.forEach(element => {
+        let obj = state.cart.find(e => e.id === element.id);
+        let i = state.cart.indexOf(obj);
+        if(i >= 0) {
+          state.cart.splice(i,1);
+        }
+      });
+      
     }
   },
   actions:{
