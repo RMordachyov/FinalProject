@@ -25,7 +25,7 @@
                     <div class="tools col-lg-3">
                         <div class="tools-content">
                             <img src="../img/Login.png" alt="user">
-                            <router-link to="/cart"><img src="../img/cart.png" alt="cart"></router-link>
+                            <router-link to="/cart"><img src="../img/cart.png" alt="cart">{{ getProductCountInCart }}</router-link>
                             
                         </div>
                         
@@ -38,7 +38,24 @@
     </main>
 </template>
 
-
+<script>
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+export default{
+    data(){
+        return{
+        }
+    },
+    computed:{
+        ...mapGetters(['getProductCountInCart']),
+    },
+    props:[
+        'product'
+    ],
+    components:{
+        
+    }
+}
+</script>
 
 
 <style scoped>

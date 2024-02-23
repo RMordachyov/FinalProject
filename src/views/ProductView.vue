@@ -7,53 +7,88 @@
             <div class="product_container_info">
                 <div class="product_imgs_container col-xl-6 col-lg-7 col-md-7">
                     <div class="product_main_img">
-                        <img src="../img/Test.png" alt="">
+                        <img :src="img_src" alt="">
                     </div>
                     <div class="product_next_imgs">
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
+                        <div class="product_next_img" v-for="img in getProductImgs.imgsPath">
+                            <img :src="`../src/img/products/${img}`" alt="" @click="changeImg">
                         </div>
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
-                        </div>
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
-                        </div>
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
-                        </div>
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
-                        </div>
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
-                        </div>
-                        <div class="product_next_img">
-                            <img src="../img/Test.png" alt="">
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="product_description_container col-xl-6 col-lg-5 col-md-5">
-                    <div class="product_description_title"><h1>Случайный товар с большим названием, которое не влезает на одну строкуfsdfdsfdsfds</h1></div>
-                    <div class="pruduct_status">В наличи Article no.: random-gift</div>
+                    <div class="product_description_title"><h1>{{ getProduct.description}}</h1></div>
+                    <div class="pruduct_status">{{ isHas }} Article no.: {{ getProduct.id }}</div>
                     <div class="product_colors">
-                        <div class="product_color" style="background-color: aquamarine;"></div>
-                        <div class="product_color" style="background-color:bisque ;"></div>
-                        <div class="product_color" style="background-color:darkcyan;"></div>
-                        <div class="product_color" style="background-color:deepskyblue;"></div>
+                        <div class="product_color" style="background-color: rgba(70, 155, 0, 0.4);">1</div>
+                        <div class="product_color" style="background-color:rgba(70, 155, 0, 0.6) ;">2</div>
+                        <div class="product_color" style="background-color:rgba(70, 155, 0, 0.8);">3</div>
+                        <div class="product_color" style="background-color:rgba(70, 155, 0, 1);">4</div>
                     </div>
                     <div class="adding_user">
-                        <p>testuser</p>
+                        <p>{{ getProduct.sailer }}</p>
                     </div>
                     <div class="product_price">
-                        <h2>15 000т</h2>
+                        <h2 @click="addToCart">{{ Number(getProduct.price).toLocaleString("ru-RU")}} &#8376</h2>
                     </div>
-                    <div class="product_ading_to_cart"><a href="#">Добавить в корзину</a></div>
+                    <div class="product_ading_to_cart"><a  @click="addToCart">Добавить в корзину</a></div>
                 </div>
             </div>
         </div> 
     </main>
 </template>
+
+<script>
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+
+export default{
+    data(){
+        return{
+            product:{}
+        }
+        
+    },
+    computed:{
+        getProduct(){
+            return this.$store.getters.g_product(this.$route.params.title)
+        },
+        img_src(){
+            if(this.getProduct.img == "" || this.getProduct.img == "noPhoto"){
+                return '../src/img/noPhoto.png'
+            }else{
+                return '../src/img/products/'+this.getProduct.img
+            }
+        }, 
+        isHas(){
+            if(this.getProduct.isHas){
+                return 'В наличии'
+            }else{
+                return 'Нет на складе'
+            }
+        },
+        getProductImgs(){
+            // console.log(this.$store.getters.g_productImg(this.getProduct.id))
+            return this.$store.getters.g_productImg(this.getProduct.id)
+        }  
+    },
+    methods:{
+        changeImg(e){
+            let img = document.querySelector('DIV[class="product_main_img"]>IMG')
+            let temp = e.srcElement.src
+            e.srcElement.src = img.getAttribute("src")
+            img.setAttribute("src",temp) 
+        },
+        addToCart(e){
+            e.preventDefault()
+            this.$store.commit('AddProductToCart', this.getProduct)
+        }
+    }
+}
+
+</script>
+
+
+
 
 <style scoped>
 *{
@@ -110,6 +145,7 @@
     border: 2px solid #00000079;
     margin-left: 20px;
     border-radius: 5px;
+    text-align: center;
 }
 .product_container{
     margin-top: 50px;
@@ -144,11 +180,13 @@
     width: 400px;
     height: 400px;
     padding: 5px;
+    
 }
 
 .product_main_img img{
     width: 100%;
     height: 100%;
+    border-radius: 20px;
 }
 
 .product_next_imgs{

@@ -6,54 +6,62 @@ export default createStore({
     st_productsList: [
       {
           "id":1,
-          "title": "testTitle",
-          "description":"testDescription",
-          "prise":"15000",
+          "title": "Туя",
+          "description":"Туя Алматинская(нет)",
+          "price":"15000",
           "discount":"15%",
-          "isHas":true,
+          "isHas":false,
           "sailer":"testUser",
           "categori":"Горячее",
-          "img":[
-              "path1",
-              "path2",
-              "path3",
-              "path4"
-          ]
+          "img":"1_main.jpg"
       },
       {
           "id":2,
           "title": "testTitle2",
           "description":"testDescription2",
-          "prise":"15000",
+          "price":"15000",
           "discount":"15%",
           "isHas":true,
           "sailer":"testUser2",
           "categori":"Предложения",
-          "img":[
-              "path12",
-              "path22",
-              "path32",
-              "path42"
-          ]
+          "img":""
       },
       {
         "id":3,
-        "title": "testTitle",
-        "description":"testDescription",
-        "prise":"15000",
+        "title": "testTitle3",
+        "description":"testDescription3",
+        "price":"150000",
         "discount":"15%",
-        "isHas":true,
-        "sailer":"testUser",
-        "categori":"Горячее",
-        "img":[
-            "path1",
-            "path2",
-            "path3",
-            "path4"
-        ]
+        "isHas":false,
+        "sailer":"testUser3",
+        "categori":"Основные товары",
+        "img":"3_main.jpg"
     }
   ],
-    st_CategoriList: ["Горячее", "Предложения", "Основные товары"]
+  st_productsImgList:[
+    {
+      "id":1,
+      imgsPath:[
+        "1_1.jpg",
+        "1_2.jpg",
+        "1_3.jpg",
+        "1_4.jpg",
+        "1_5.jpg"
+      ]
+    },
+    {
+      "id":2,
+      imgsPath:[
+        "2_1.jpg",
+        "2_2.jpg",
+        "2_3.jpg",
+        "2_4.jpg",
+        "2_5.jpg"
+      ]
+    }
+  ],
+  cart:[],
+  st_CategoriList: ["Горячее", "Предложения", "Основные товары"]
   },
   getters:{
     g_categoriList(state){
@@ -63,13 +71,43 @@ export default createStore({
           "categori":categori,
           "products":state.st_productsList.filter(p => p.categori === categori)
         }
+      if(objCategori.products.length != 0){
         outList.push(objCategori)
+      }
+        
       });
       return outList
     },
+    g_product: (state) => (title) => {
+      return state.st_productsList.find(p => p.title === title)
+    },
+    g_productImg: (state) => (id) => {
+      let img = state.st_productsImgList.find(p => p.id === id)
+      if(img == undefined){
+        img = {id:id, imgsPath:["noPhoto.png"]}
+        
+      }
+      return img 
+    },
+    getProductCountInCart(state){
+      console.log(state.cart.length)
+      console.log(state.cart)
+      return state.cart.length
+    }
   },
   mutations:{
-
+    AddProductToCart(state,payload){
+      console.log(state.cart.length+1)
+      console.log(state.cart)
+      state.cart.push(payload)
+    },
+    deleteProductFromCart(state,payload){
+      let obj = state.cart.find(e => e.id === id);
+      let i = state.cart.indexOf(obj);
+      if(i >= 0) {
+        state.cart.splice(i,1);
+      }
+    }
   },
   actions:{
 

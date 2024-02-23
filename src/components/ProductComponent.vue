@@ -1,14 +1,14 @@
 <template>
     <main class="container products_component">
         <div class="mainImg">
-            <img src="../img/test.png" alt="mainImg">
+            <router-link :to="`/product/${product.title}`"><img :src="img_src" :alt="product.img"></router-link>
         </div>
         <div class="product_description">
-            <p>{{ product.testTitle }}</p>
+            <p>{{ product.title}}</p>
         </div>
         <div class="product_price_container">
             <div class="price">
-                <h2>{{ product.prise }}</h2>
+                <h2>{{ Number(product.price).toLocaleString("ru-RU") }} &#8376</h2>
             </div>
             <div class="add_to_cart">
                 <div href="#" class="add_to_cart_button">+</div>
@@ -25,10 +25,16 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default{
     data(){
         return{
-           
         }
     },
     computed:{
+        img_src(){
+            if(this.product.img == "" || this.product.img == "noPhoto"){
+                return 'src/img/noPhoto.png'
+            }else{
+                return 'src/img/products/'+this.product.img
+            }
+        }
     },
     props:[
         'product'
