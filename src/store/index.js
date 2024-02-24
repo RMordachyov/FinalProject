@@ -34,7 +34,7 @@ export default createStore({
         "discount":"0.15",
         "isHas":false,
         "sailer":"testUser3",
-        "categori":"Основные товары",
+        "categori":"Предложения",
         "img":"3_main.jpg"
     }
   ],
@@ -61,7 +61,7 @@ export default createStore({
     }
   ],
   cart:[],
-  st_CategoriList: ["Горячее", "Предложения", "Основные товары"]
+  st_CategoriList: ["Нравиться", "Горячее", "Предложения", "Основные товары"]
   },
   getters:{
     g_categoriList(state){
@@ -90,37 +90,101 @@ export default createStore({
       return img 
     },
     getProductCountInCart(state){
-      console.log(state.cart.length)
-      console.log(state.cart)
+      // console.log(state.cart.length)
+      // console.log(state.cart)
       return state.cart.length
     },
     getCart(state){
       return state.cart
+    },
+    getTotalOrderPrice(state){
+      let TotalOrderPrice = {
+        Order:0,
+        Delivery:0,
+        Discount:0,
+        Total:0
+      }
+      let price = 0
+      let discount = 0
+      let total = 0
+      let delivery=0
+
+      state.cart.forEach(product => {
+        price += (product.data.price)*product.count
+        discount += (product.data.price*product.data.discount)*product.count
+        total += price
+      });
+      if((state.cart.find(p => p.count >= 3) == undefined) || state.cart.length >= 3){
+        delivery = total*0.05
+      }else{
+        delivery = 0
+      }
+      total+=delivery
+
+      TotalOrderPrice.Order = price
+      TotalOrderPrice.Discount = discount
+      TotalOrderPrice.Delivery = delivery
+      TotalOrderPrice.Total = total
+
+      return TotalOrderPrice
     }
+    
   },
   mutations:{
     AddProductToCart(state,payload){
+      
+      let newObj = {
+        id:payload.id,
+        count:1,
+        data:payload
+      }
       if(state.cart.length ==0){
-        state.cart.push(payload)
+        state.cart.push(newObj)
       }else{
-        // console.log(element)
         if(state.cart.find(e => e.id === payload.id) == undefined){
-          state.cart.push(payload)
+          state.cart.push(newObj)
         }else{
-          return alert("Вы уже добавили в корзину товар " + payload.description)
+          return alert("Вы уже добавили в корзину товар " + newObj.data.description)
         }
       }
       
     },
     deleteProductFromCart(state,payload){
       payload.forEach(element => {
-        let obj = state.cart.find(e => e.id === element.id);
-        let i = state.cart.indexOf(obj);
-        if(i >= 0) {
-          state.cart.splice(i,1);
+        let obj = state.cart.find(p => p.id == element.id);
+        let objIndex = state.cart.indexOf(obj);
+        if(objIndex > -10){
+          state.cart.splice(objIndex,1);
         }
       });
       
+    },
+    incrementProductCount(state,payload){
+      let obj = state.cart.find(p => p.id === payload.id)
+      obj.count++
+    },
+    decreaseProductCount(state,payload){
+      let obj = state.cart.find(p => p.id === payload.id)
+      if(obj.count != 1){
+        obj.count--
+      }else{
+        return 0
+      }
+      
+    },
+    changeFavoriteCategori(state,payload){
+      let obj = state.st_productsList.find(p => p.id == payload.id);
+      if(obj.categori != "Нравиться"){
+        obj.oldCategori = obj.categori
+        obj.categori = "Нравиться"
+      }else{
+        if(obj.oldCategori == "" ||obj.oldCategori == undefined){
+          obj.categori = "Предложения"
+        }else{
+          obj.categori = obj.oldCategori
+        }
+      }
+      console.log(obj)
     }
   },
   actions:{

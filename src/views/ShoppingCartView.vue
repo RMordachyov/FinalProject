@@ -2,14 +2,14 @@
     <main class="shopping-cart container">
         <div class="row">
             <div class="bredcrumbs col-12">
-                test / test
+               {{$route.path}}
             </div>
             <div class="products-in-cart col-lg-9">
                 <h2>Моя корзина</h2>
                 <div class="product-head-list">
-                    <input type="checkbox" name="selectAll" id="selectAllProducts">
+                    <input type="checkbox" name="selectAll" id="selectAllProducts" @change="selectAllProducts">
                     <label for="selectAll">Выбрать всё</label>
-                    <a class="delete-button">Удалить</a>
+                    <a href="#" class="delete-button" @click="deleteProductFromCart">Удалить</a>
                 </div>
                 <div class="product-list">
                     <ProductCartComponent v-for="product in getCart" :product="product"/>
@@ -22,19 +22,19 @@
                         <tbody>
                             <tr>
                                 <td>Покупки</td>
-                                <td>45 000</td>
+                                <td>{{Number(getTotalOrderPrice.Order).toLocaleString("ru-RU")}} &#8376</td>
                             </tr>
                             <tr>
                                 <td>Доставка</td>
-                                <td>45 000</td>
+                                <td>{{Number(getTotalOrderPrice.Delivery).toLocaleString("ru-RU")}} &#8376</td>
                             </tr>
                             <tr>
                                 <td>Скидка</td>
-                                <td>45 000</td>
+                                <td>{{Number(getTotalOrderPrice.Discount).toLocaleString("ru-RU")}} &#8376</td>
                             </tr>
                             <tr>
                                 <td><b>Всего</b></td>
-                                <td><b>45 000</b></td>
+                                <td><b>{{Number(getTotalOrderPrice.Total).toLocaleString("ru-RU")}} &#8376</b></td>
                             </tr>
                         </tbody>
                     </table>
@@ -50,8 +50,35 @@
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import ProductCartComponent from '../components/ProductCartComponent.vue'
 export default{
+    data(){
+        return{
+            selectedForDelete: []
+        }
+    },
     computed:{
         ...mapGetters(['getCart']),
+        ...mapGetters(['getTotalOrderPrice'])
+    },
+    methods:{
+        selectAllProducts(){
+            let allCheckboxs = document.querySelectorAll("INPUT[name^='selectProduct']")
+            allCheckboxs.forEach(e => {
+                 e.checked = !e.checked;   
+            });
+        },
+        deleteProductFromCart(e){
+            e.preventDefault()
+            let selectAllProducts = document.getElementById('selectAllProducts')
+            if(selectAllProducts.checked == true){
+                let temp = JSON.parse(JSON.stringify(this.getCart))
+                this.$store.commit('deleteProductFromCart', temp)
+                selectAllProducts.checked = false
+            }else{
+                selectAllProducts.checked = false
+                return 0
+            }
+            
+        },
     },
     components:{
         ProductCartComponent

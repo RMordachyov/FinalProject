@@ -6,8 +6,8 @@
                     <h1>Большой заголовок</h1>
                     <p>небольшой слоган</p>
                     <div class="banner_buttons_container">
-                        <a href="#" class="banner_button button_to">К товарам</a>
-                        <a href="#" class="banner_button button_about">О проекте</a>
+                        <router-link :to="{path:'/', hash:'#product-prise'}" class="banner_button button_to">К товарам</router-link>
+                        <router-link to="about"class="banner_button button_about">О проекте</router-link>
                     </div>
                 </div>
                 
@@ -40,7 +40,8 @@
     flex-direction: column;
 }
 .banner_col{
-    height: 440px;
+    min-height: 200px;
+    max-height: 400px;
     position: relative;
 }
 
@@ -55,7 +56,7 @@
     padding: 8px 30px;
     border-radius: 6px;
     /* margin-left: 30px; */
-    background-color: rgba(33, 167, 0, 0.74);
+    background-color: rgba(33, 167, 0, 1);
     text-decoration: none;
     color: white;
     font-weight: 700;

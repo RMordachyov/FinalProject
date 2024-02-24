@@ -7,7 +7,7 @@
                     <div class="logo col-lg-3">
                         <div class="logo1">
                             <img src="../img/logo1.png" alt="logo1">
-                            <span>NameOfNo</span>
+                            <span>Зелёное Дерево</span>
                         </div>
                         <div class="logo2">
                             <img src="../img/logo.png" alt="logo2">
@@ -18,14 +18,19 @@
                             <ul>
                                 <li><router-link to="/">Продукция</router-link></li>
                                 <li><router-link to="about">О компании</router-link></li>
-                                <li><router-link to="product">Каталог товаров</router-link></li>
+                                <li><router-link :to="{path:'/', hash:'#product-prise'}" >Каталог товаров</router-link></li>
                             </ul>
                         </div>
                     </div>
                     <div class="tools col-lg-3">
                         <div class="tools-content">
                             <img src="../img/Login.png" alt="user">
-                            <router-link to="/cart"><img src="../img/cart.png" alt="cart">{{ getProductCountInCart }}</router-link>
+                            <div class="product-count-in-cart">
+                               
+                                <router-link to="/cart"> <img src="../img/cart.png" alt="cart"></router-link>
+                                <div class="product-count-in-cart-count">{{ getProductCountInCart }}</div>
+                            </div>
+                            
                             
                         </div>
                         
@@ -101,6 +106,21 @@ export default{
     padding: 10px 0;
 }
 
+.product-count-in-cart{
+    position: relative;
+}
+
+.product-count-in-cart-count{
+    padding: 0px 6px;
+    background-color: rgb(253, 228, 0);
+    text-decoration: none;
+    color: rgb(0, 38, 255);
+    border-radius: 100%;
+    position: absolute;
+    top:-6px;
+    right: -10px;
+}
+
 .tools img{
     width: 36px;
     height: 36px;
@@ -122,7 +142,9 @@ export default{
 .logo1{
     padding: 5px;
 }
-
+.logo1 img{
+    margin-right: 10px;
+}
 .logo2{
     border-left: 1px solid #0000004d;
     width: 40px;

@@ -42,9 +42,11 @@ export default{
     methods:{
         addToCart(e){
             e.preventDefault()
-            console.log("home comp")
-            console.log(this.product)
             this.$store.commit('AddProductToCart', this.product)
+        },
+        changeFavoriteCategori(e){
+            e.preventDefault()
+            this.$store.commit('changeFavoriteCategori', this.product)
         }
     },
     components:{

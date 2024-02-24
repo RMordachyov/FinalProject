@@ -1,10 +1,9 @@
 <template>
-  <main class="HomeView">
+  <main class="HomeView" id="product-prise">
     <div class="fluid-container banner">
     <banner />
 </div>
     <CategoriProductsComponent v-for="categori in g_categoriList" :categori="categori"/>
-    <p>{{ categori }}</p>
   </main>
 </template>
 
@@ -20,7 +19,7 @@ export default{
   data(){
     return{
       exData: {},
-      
+      categori:{}
     }
   },
   computed:{

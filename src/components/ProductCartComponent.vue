@@ -2,40 +2,39 @@
     <main class="product-cart-component fluid-container">
         <div class="row">
             <div class="product-cart-description col-lg-9">
-            <input type="checkbox" name="selectProduct" class="selectProduct">
+            <input type="checkbox" :name="`selectProduct-${product.id}`" class="selectProduct">
             <div class="product-cart-img">
                 <img :src="img_src" alt="">
             </div>
             <div class="product-cart-description-info">
-                <div class="product-cart-description-title"><h5>{{ product.description }}</h5></div>
+                <div class="product-cart-description-title"><h5>{{ product.data.description }}</h5></div>
                 <div class="product-cart-status"><span>{{ isHas }}</span></div>
                 <div class="product-cart-color">
                     <div class="product-cart-color-pin"></div>
                     <span>Зелёная</span>
                 </div>
                 <div class="adding_user product-cart-adding-user">
-                    TestUser
+                    {{ product.data.sailer }}
                 </div>
             </div>
         </div>
         <div class="product-cart-price  col-lg-3">
             <div class="product-cart-actions">
-                <a ><img  src="../img/Heart.png" alt=""></a>
+                <a ><img  :src="favoriteCategori" alt="" @click="changeFavoriteCategori"></a>
                 <a href="#" @click="deleteProductFromCart"><img src="../img/Frame 825.png" alt=""></a>
             </div>
             <div class="product-cart-price-total">
-                <h4>{{ Number(product.price).toLocaleString("ru-RU")}} &#8376</h4>
-                <h5><del>{{ (Number(product.price)+(product.price*product.discount)).toLocaleString("ru-RU")}} &#8376</del></h5>
+                <h4>{{ Number(product.data.price*product.count).toLocaleString("ru-RU")}} &#8376</h4>
+                <h5><del>{{ (Number(product.data.price*product.count)+((product.data.price*product.data.discount)*product.count)).toLocaleString("ru-RU")}} &#8376</del></h5>
             </div>
             <div class="product-cart-price-count">
                 
-                <a href="#">-</a>
-                <a href="#">1</a>
-                <a href="#">+</a>
+                <a href="#" @click="decreaseProductCount">-</a>
+                <a href="#">{{ product.count }}</a>
+                <a href="#" @click="incrementProductCount">+</a>
             </div>
         </div>
         </div>
-      
     </main>
 </template>
 
@@ -44,18 +43,26 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default{
     data(){
         return{
+            heartImgPath:""
         }
     },
     computed:{
+        favoriteCategori(){
+            if(this.product.data.categori == "Нравиться"){
+                return  "../src/img/Heart-red.png"
+            }else{
+                return "../src/img/Heart.png"
+            }
+        },
         img_src(){
-            if(this.product.img == "" || this.product.img == "noPhoto"){
+            if(this.product.data.img == "" || this.product.data.img == "noPhoto"){
                 return 'src/img/noPhoto.png'
             }else{
-                return 'src/img/products/'+this.product.img
+                return 'src/img/products/'+this.product.data.img
             }
         }, 
         isHas(){
-            if(this.product.isHas){
+            if(this.product.data.isHas){
                 return 'В наличии'
             }else{
                 return 'Нет на складе'
@@ -69,6 +76,18 @@ export default{
         deleteProductFromCart(e){
             e.preventDefault()
             this.$store.commit('deleteProductFromCart', [this.product])
+        },
+        incrementProductCount(e){
+            e.preventDefault()
+            this.$store.commit('incrementProductCount', this.product)
+        },
+        decreaseProductCount(e){
+            e.preventDefault()
+            this.$store.commit('decreaseProductCount', this.product)
+        },
+        changeFavoriteCategori(e){
+            e.preventDefault()
+            this.$store.commit('changeFavoriteCategori', this.product)
         }
     },
     components:{
@@ -158,7 +177,6 @@ export default{
     max-width: 150px;
     max-height: 150px;
     border-radius: 15px;
-    border: 1px solid #000;
     margin-left: 10px;
     margin-right: 10px
 }
