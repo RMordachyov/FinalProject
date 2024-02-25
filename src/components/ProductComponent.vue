@@ -1,22 +1,40 @@
 <template>
     <main class="container products_component">
-        <div class="mainImg">
-            <router-link :to="`/product/${product.title}`"><img :src="img_src" :alt="product.img"></router-link>
+        <div class="card">
+            <div class="card__top">
+            <router-link class="card__image" :to="`/product/${product.title}`">
+                <img :src="img_src" :alt="product.img">
+            </router-link>
         </div>
-        <div class="product_description">
-            <p>{{ product.title}}</p>
-        </div>
-        <div class="product_price_container">
-            <div class="price">
-                <h2>{{ Number(product.price).toLocaleString("ru-RU") }} &#8376</h2>
+        <div class="card__content">
+            <div class="card__description">
+                <div class="card__description--text">
+                    {{ product.title}}
+                </div>
+                <div :class="setStatusClass" class="description--status ">
+                    {{ product.status }}
+                </div>
             </div>
-            <div class="add_to_cart">
-                <div href="#" class="add_to_cart_button" @click="addToCart">+</div>
+        </div>
+        <div class= "price--discount" >
+            <div v-if="showDiscount">
+                 <del>
+                    {{ Number(product.price).toLocaleString("ru-RU") }} &#8376
+                </del>
             </div>
         </div>
-        <div class="adding_user">
-            <p>{{ product.sailer }}</p>
+        <div class="card__bottom">
+            <div class="card__prices">
+                
+                <div class="price--common" :class="withDiscount">{{ Number(getCommonPrice).toLocaleString("ru-RU") }} &#8376</div>
+                <a href="#" class="card__adding-user">{{ product.sailer }}</a>
+            </div>
+            <div class="card__bottom--add-button">
+                <a href="#" class="card__add" @click="addToCart">+</a>
+            </div>
         </div>
+        </div>
+        
     </main>
 </template>
 
@@ -25,6 +43,8 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 export default{
     data(){
         return{
+            status:"",
+            statusClass:""
         }
     },
     computed:{
@@ -34,6 +54,37 @@ export default{
             }else{
                 return 'src/img/products/'+this.product.img
             }
+        },
+        setStatusClass(){
+            switch (this.product.status) {
+                case "В наличии":
+                    this.statusClass = "description--status-in-store"
+                    break;
+                case "Нет на складе":
+                    this.statusClass = "description--status-no-found"   
+                    break;
+                default:
+                    this.statusClass = "description--status-by-way"  
+                    break;
+            }
+            return this.statusClass
+        },
+        getCommonPrice(){
+             return this.product.price-(this.product.price*this.product.discount)
+        },
+        showDiscount(){
+            if(this.product.discount == "0" || this.product.discount == ""){
+                return false
+            }else{
+                return true
+            }
+        },
+        withDiscount(){
+            if(this.product.discount == "0" || this.product.discount == ""){
+                return ""
+            }else{
+                return "price--withDiscount"
+            }
         }
     },
     props:[
@@ -42,12 +93,9 @@ export default{
     methods:{
         addToCart(e){
             e.preventDefault()
-            this.$store.commit('AddProductToCart', this.product)
-        },
-        changeFavoriteCategori(e){
-            e.preventDefault()
-            this.$store.commit('changeFavoriteCategori', this.product)
+            this.$store.commit('AddProductToCart', [this.product,1])
         }
+        
     },
     components:{
         
@@ -59,49 +107,78 @@ export default{
 *{
     /* border: 1px solid #000; */
 }
-p{
-    margin: 0;
-}
 .products_component{
-    padding: 5px;
-    max-width: 230px;
-    min-width: 230px;
+    padding: 0px;
+    width: 230px;
     min-height: 305px;
-    max-height: 305px;
     border-radius:15px;
     margin: 15px;
-    box-shadow: 0 0px 1px #00000071;
-    background:white
+    box-shadow: 0 1px 3px #00000071;
+    background:white;
 }
-.mainImg{
+.card{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 0px ;    
+    border-radius: 10px;
+}
+.card__image img{
     width: 100%;
     height: 200px;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0px;
     margin-bottom: 10px;
+}
+.products_component:hover {
+  box-shadow: 3px 8px 10px #00000071;
+}
+.card__content{
+    padding-left: 15px;
+}
+
+.card__description--text{
+    font-size: 21px;
+    font-weight: 500;
+    padding: 5px;
+}
+.card__description--status{
+    max-width: 100px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgb(119, 119, 119);
     
 }
-.mainImg img{
-    width: 100%;
-    height: 200px;
-    border-radius:6px;
-}
 
-.product_price_container{
+
+
+.card__bottom{
     display: flex;
-
+    flex-direction: row;
+    justify-content:flex-start;
 }
 
-.price{
-    width: 150px;
+.card__prices{
+    min-width: 150px;
 }
 
-.add_to_cart{
-    width: 80px;
-    position: relative;
+.card__prices div{
+    min-width: 150px;
+    text-align: right;
+}
+.card__adding-user{
+    font-size: 13px;
+    color: lightgrey;
+    background:white url(../img/User.png) no-repeat 0 3px;
+    padding-left: 22px;
+    text-align: left;
+}
+.card__bottom--add-button{
+    padding: 10px;
 }
 
-.add_to_cart_button{
-    position: absolute;
+.card__add{
     display: block;
     margin: 0 auto;
     text-decoration: none;
@@ -112,31 +189,15 @@ p{
     font-weight: 800;
     font-size: 20px;
     background-color: rgba(139, 139, 138, 0.74);
-    /* padding: 2px 20px; */
     border-radius: 6px;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translate(0, -50%);
     cursor: pointer;
+    margin-top: -5px;
 }
 
-.add_to_cart_button:hover{
+.card__add:hover{
     width: 52px;
     height: 32px;
     background-color: rgba(33, 167, 0, 0.74);
 }
 
-.adding_user{
-    font-size: 13px;
-    color: lightgrey;
-    background:white url(../img/User.png) no-repeat 0 3px;
-    padding-left: 22px;
-    display: flex;
-    align-items: stretch;
-}
-.adding_user p{
-    align-items: center;
-    display: flex;
-}
 </style>

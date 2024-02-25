@@ -10,7 +10,7 @@ export default createStore({
           "description":"Туя Алматинская(нет)",
           "price":"15000",
           "discount":"0.15",
-          "isHas":false,
+          "status":"В наличии",
           "sailer":"testUser",
           "categori":"Горячее",
           "img":"1_main.jpg"
@@ -21,22 +21,34 @@ export default createStore({
           "description":"testDescription2",
           "price":"15000",
           "discount":"0.15",
-          "isHas":true,
+          "status":"Нет на складе",
           "sailer":"testUser2",
           "categori":"Предложения",
           "img":""
       },
       {
         "id":3,
-        "title": "testTitle3",
-        "description":"testDescription3",
+        "title": "Голубая ель",
+        "description":"Голубая ель",
         "price":"150000",
-        "discount":"0.15",
-        "isHas":false,
+        "discount":"0",
+        "status":"В пути",
         "sailer":"testUser3",
         "categori":"Предложения",
         "img":"3_main.jpg"
+    },
+    {
+      "id":4,
+      "title": "testTitle4",
+      "description":"testDescription4",
+      "price":"15000",
+      "discount":"0.50",
+      "status":"Нет на складе",
+      "sailer":"testUser4",
+      "categori":"Горячее",
+      "img":""
     }
+  
   ],
   st_productsImgList:[
     {
@@ -61,7 +73,7 @@ export default createStore({
     }
   ],
   cart:[],
-  st_CategoriList: ["Нравиться", "Горячее", "Предложения", "Основные товары"]
+  st_CategoriList: ["Нравится", "Горячее", "Предложения", "Основные товары"]
   },
   getters:{
     g_categoriList(state){
@@ -90,14 +102,13 @@ export default createStore({
       return img 
     },
     getProductCountInCart(state){
-      // console.log(state.cart.length)
-      // console.log(state.cart)
       return state.cart.length
     },
     getCart(state){
       return state.cart
     },
     getTotalOrderPrice(state){
+      let p_Count=0
       let TotalOrderPrice = {
         Order:0,
         Delivery:0,
@@ -110,17 +121,19 @@ export default createStore({
       let delivery=0
 
       state.cart.forEach(product => {
-        price += (product.data.price)*product.count
+        price += (product.data.price-(product.data.price*product.data.discount))*product.count
         discount += (product.data.price*product.data.discount)*product.count
         total += price
       });
-      if((state.cart.find(p => p.count >= 3) == undefined) || state.cart.length >= 3){
+      state.cart.forEach(element => {
+        p_Count+=element.count
+      });
+      if(p_Count < 3){
         delivery = total*0.05
       }else{
         delivery = 0
       }
       total+=delivery
-
       TotalOrderPrice.Order = price
       TotalOrderPrice.Discount = discount
       TotalOrderPrice.Delivery = delivery
@@ -132,16 +145,17 @@ export default createStore({
   },
   mutations:{
     AddProductToCart(state,payload){
-      
+      console.log(payload)
       let newObj = {
-        id:payload.id,
+        id:payload[0].id,
         count:1,
-        data:payload
+        age:payload[1],
+        data:payload[0]
       }
       if(state.cart.length ==0){
         state.cart.push(newObj)
       }else{
-        if(state.cart.find(e => e.id === payload.id) == undefined){
+        if(state.cart.find(e => e.id === payload[0].id) == undefined){
           state.cart.push(newObj)
         }else{
           return alert("Вы уже добавили в корзину товар " + newObj.data.description)
@@ -174,9 +188,9 @@ export default createStore({
     },
     changeFavoriteCategori(state,payload){
       let obj = state.st_productsList.find(p => p.id == payload.id);
-      if(obj.categori != "Нравиться"){
+      if(obj.categori != "Нравится"){
         obj.oldCategori = obj.categori
-        obj.categori = "Нравиться"
+        obj.categori = "Нравится"
       }else{
         if(obj.oldCategori == "" ||obj.oldCategori == undefined){
           obj.categori = "Предложения"

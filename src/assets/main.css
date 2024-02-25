@@ -29,10 +29,55 @@
 }
 
 .adding_user{
-    font-size: 13px;
+    font-size: 17px;
     color: lightgrey;
     background:white url(../img/User.png) no-repeat 0 3px;
     padding-left: 22px;
     display: flex;
     align-items: stretch;
+}
+
+.description--status-in-store{
+    background-color: rgba(0, 190, 0, 0.3);
+}
+.description--status-no-found{
+    background-color: rgba(255, 228, 109, 0.3);
+}
+.description--status-by-way{
+    background-color: rgba(111, 109, 255, 0.3);
+}
+
+
+.description--status{
+    max-width: 100px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 400;
+    color: rgb(119, 119, 119);
+}
+
+.price--common{
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: 25px;
+    font-weight: 700;
+    color: rgb(119, 119, 119);
+    padding-top: 0px;
+}
+
+.price--discount{
+   min-height: 25px;
+}
+
+.price--discount, del{
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(119, 119, 119);
+    text-align: center;
+    padding: 3px 0;
+}
+
+.price--withDiscount{
+    color: rgb(255, 115, 115);
 }

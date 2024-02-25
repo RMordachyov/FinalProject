@@ -38,7 +38,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a href="#" class="send-order-button">Оформить заказ</a>
+                    <a href="#" class="send-order-button" @click="getOrder">Оформить заказ</a>
                 </div>
             </div>
         </div>
@@ -79,6 +79,9 @@ export default{
             }
             
         },
+        getOrder(){
+            alert("Заказ оформлен!! Общая сумма к оплате "+Number(this.getTotalOrderPrice.Total).toLocaleString("ru-RU"))
+        }
     },
     components:{
         ProductCartComponent

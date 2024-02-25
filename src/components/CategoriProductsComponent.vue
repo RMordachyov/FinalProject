@@ -32,7 +32,6 @@ export default{
 .categori_products_component{
     display: flex;
     flex-direction: row;
-    /* box-shadow: 0 0px 1px #0000008f; */
     flex-wrap:wrap;
     padding: 0px;
     min-height: 300px;
