@@ -45,7 +45,7 @@ export default createStore({
       "discount":"0.50",
       "status":"Нет на складе",
       "sailer":"testUser4",
-      "categori":"Горячее",
+      "categori":"Нравится",
       "img":""
     }
   

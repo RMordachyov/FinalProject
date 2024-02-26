@@ -1,9 +1,13 @@
 <template>
-    <main class="container product_container">
+    <main class="container product_container" id="product_container">
         <div class="row">
-            <!-- <b-breadcrumb class="bread_crumbs" :items="this.items">
-            </b-breadcrumb> -->
-                <b-breadcrumb :items="items"></b-breadcrumb>
+            <div class="bread-crumbs">
+                <router-link to="/">Главная</router-link> \
+                <!-- <a :href="`/#categori_${getCategoriIndex}`">{{ getProduct.categori }} </a> \ -->
+                <router-link :to="{ name: 'home', hash: '#categori_'+getCategoriIndex }">{{ getProduct.categori + " " +getCategoriIndex}}</router-link> \
+                
+                <a :href="$route.path">{{ $route.params.title }}</a>
+            </div>
             <div class="product_container__heartIcon">
                 <a ><img  :src="favoriteCategori" alt="" @click="changeFavoriteCategori"></a>
             </div>
@@ -77,22 +81,7 @@ export default{
         
     },
     computed:{
-        // setBreadCrumbs(){
-        //     return this.items =[
-        //         {
-        //             text:'Главная',
-        //             href:'/'
-        //         },
-        //         {
-        //             text:this.getProduct.categori,
-        //             href:'#'
-        //         },
-        //         {
-        //             text:this.getProduct.description,
-        //             href:'#'
-        //         },
-        //     ]
-        // },
+        
         getProduct(){
             return this.$store.getters.g_product(this.$route.params.title)
         },
@@ -144,6 +133,11 @@ export default{
                     break;
             }
             return this.statusClass
+        },
+        ...mapState(['st_CategoriList']),
+        getCategoriIndex(){
+             let objIndex = this.st_CategoriList.indexOf(this.getProduct.categori);
+            return objIndex
         },
     },
     methods:{
@@ -281,10 +275,7 @@ export default{
     margin-top: 50px;
 }
 
-.bread_crumbs{
-    width: 100%;
-    color: lightgray;
-}
+
 
 .product_imgs_container{
     display: flex;

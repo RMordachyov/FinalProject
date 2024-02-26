@@ -16,9 +16,12 @@
                     <div class="tabs col-lg-6">
                         <div class="top-menu">
                             <ul>
-                                <li><router-link to="/">Продукция</router-link></li>
+                                <li><router-link to="/">Главная</router-link></li>
                                 <li><router-link to="about">О компании</router-link></li>
-                                <li><router-link :to="{path:'/', hash:'#product-prise'}" >Каталог товаров</router-link></li>
+                                <li>
+                                    <!-- <router-link to="/#categori_0" >Каталог товаров</router-link> -->
+                                    <a href="/#categori_0">Каталог товаров</a>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -94,7 +97,7 @@ export default{
 
 .top-menu ul li a{
     color: black;
-    font-size: 14px;
+    font-size: 18px;
     text-decoration: none;
     
     
@@ -112,9 +115,9 @@ export default{
 
 .product-count-in-cart-count{
     padding: 0px 6px;
-    background-color: rgb(253, 228, 0);
+    background-color: rgb(19, 161, 0);
     text-decoration: none;
-    color: rgb(0, 38, 255);
+    color: rgb(255, 255, 255);
     border-radius: 100%;
     position: absolute;
     top:-6px;

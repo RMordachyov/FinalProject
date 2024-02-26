@@ -6,8 +6,8 @@
                     <h1>Большой заголовок</h1>
                     <p>небольшой слоган</p>
                     <div class="banner_buttons_container">
-                        <router-link :to="{path:'/', hash:'#product-prise'}" class="banner_button button_to">К товарам</router-link>
-                        <router-link to="about"class="banner_button button_about">О проекте</router-link>
+                        <a href="#categori_0" class="banner_button button_to">К товарам</a>
+                        <router-link to="about" class="banner_button button_about">О проекте</router-link>
                     </div>
                 </div>
                 

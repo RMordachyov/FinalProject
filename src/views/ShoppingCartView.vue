@@ -1,8 +1,9 @@
 <template>
     <main class="shopping-cart container">
         <div class="row">
-            <div class="bredcrumbs col-12">
-               {{$route.path}}
+            <div class="bread-crumbs col-12">
+                <router-link to="/">Главная</router-link> \
+                <router-link :to="$route.path">Моя корзина</router-link>
             </div>
             <div class="products-in-cart col-lg-9">
                 <h2>Моя корзина</h2>
@@ -57,7 +58,12 @@ export default{
     },
     computed:{
         ...mapGetters(['getCart']),
-        ...mapGetters(['getTotalOrderPrice'])
+        ...mapGetters(['getTotalOrderPrice']),
+        ...mapState(['st_CategoriList']),
+        getCategoriIndex(){
+             let objIndex = this.st_CategoriList.indexOf(this.getProduct.categori);
+            return objIndex-1
+        },
     },
     methods:{
         selectAllProducts(){

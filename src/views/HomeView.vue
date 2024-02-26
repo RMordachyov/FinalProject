@@ -1,9 +1,9 @@
 <template>
   <main class="HomeView" id="product-prise">
     <div class="fluid-container banner">
-    <banner />
-</div>
-    <CategoriProductsComponent v-for="categori in g_categoriList" :categori="categori"/>
+      <banner />
+    </div>
+    <CategoriProductsComponent v-for="(categori,index) in g_categoriList" :id="`categori_${index}`" :categori="categori"/>
   </main>
 </template>
 
