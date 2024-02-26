@@ -6,7 +6,7 @@
                     <div class="footer-logo col-lg-3 col-sm-12">
                         <div class="logo1">
                             <img src="../img/logo1.png" alt="logo1">
-                            <span>Зелёное Дерево</span>
+                            <span>Зелёное Хозяйство</span>
                             <div class="soc-links">
                             <ul>
                                 <li><a href="#" class="soc_links_icon" id="soc_links_f"></a></li>
@@ -23,9 +23,9 @@
                     <div class=" col-lg-9 col-sm-12">
                         <div class="top-menu-footer">
                             <ul>
-                                <li><router-link to="/">Продукция</router-link></li>
-                                <li><router-link to="about">О компании</router-link></li>
-                                <li><router-link :to="{path:'/', hash:'#product-prise'}" >Каталог товаров</router-link></li>
+                                <li><router-link to="/">Главная</router-link></li>
+                                <li><router-link to="about">О проекте</router-link></li>
+                                <li><router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></li>
                             </ul>
                         </div>
                     </div>

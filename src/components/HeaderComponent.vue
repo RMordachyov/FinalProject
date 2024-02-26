@@ -7,7 +7,7 @@
                     <div class="logo col-lg-3">
                         <div class="logo1">
                             <img src="../img/logo1.png" alt="logo1">
-                            <span>Зелёное Дерево</span>
+                            <span>Зелёное Хозяйство</span>
                         </div>
                         <div class="logo2">
                             <img src="../img/logo.png" alt="logo2">
@@ -16,20 +16,23 @@
                     <div class="tabs col-lg-6">
                         <div class="top-menu">
                             <ul>
-                                <li><router-link to="/">Главная</router-link></li>
-                                <li><router-link to="about">О компании</router-link></li>
                                 <li>
-                                    <!-- <router-link to="/#categori_0" >Каталог товаров</router-link> -->
-                                    <a href="/#categori_0">Каталог товаров</a>
+                                    <router-link to="/">Главная</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="about">О проекте</router-link>
+                                </li>
+                                <li>
+                                    <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link>
                                 </li>
                             </ul>
                         </div>
                     </div>
                     <div class="tools col-lg-3">
                         <div class="tools-content">
+                            <img src="../img/Search.png" alt="user" style="width: 28px; height: 28px; margin-right: 10px; margin-top: 3px;">
                             <img src="../img/Login.png" alt="user">
                             <div class="product-count-in-cart">
-                               
                                 <router-link to="/cart"> <img src="../img/cart.png" alt="cart"></router-link>
                                 <div class="product-count-in-cart-count">{{ getProductCountInCart }}</div>
                             </div>

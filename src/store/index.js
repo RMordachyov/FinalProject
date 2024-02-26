@@ -12,13 +12,13 @@ export default createStore({
           "discount":"0.15",
           "status":"В наличии",
           "sailer":"testUser",
-          "categori":"Горячее",
+          "categori":"Нравится",
           "img":"1_main.jpg"
       },
       {
           "id":2,
-          "title": "testTitle2",
-          "description":"testDescription2",
+          "title": "Некий товар",
+          "description":"Описание некого товара",
           "price":"15000",
           "discount":"0.15",
           "status":"Нет на складе",
@@ -34,20 +34,32 @@ export default createStore({
         "discount":"0",
         "status":"В пути",
         "sailer":"testUser3",
-        "categori":"Предложения",
+        "categori":"Основные",
         "img":"3_main.jpg"
     },
     {
       "id":4,
-      "title": "testTitle4",
-      "description":"testDescription4",
+      "title": "Кедр",
+      "description":"Кедр Сибирский",
       "price":"15000",
       "discount":"0.50",
       "status":"Нет на складе",
       "sailer":"testUser4",
-      "categori":"Нравится",
-      "img":""
+      "categori":"Горячее",
+      "img":"4_main.jpg"
+    },
+    {
+      "id":5,
+      "title": "Вишня",
+      "description":"Просто вишня",
+      "price":"30000",
+      "discount":"",
+      "status":"Нет на складе",
+      "sailer":"testUser4",
+      "categori":"Горячее",
+      "img":"5_main.jpg"
     }
+    
   
   ],
   st_productsImgList:[
@@ -62,18 +74,35 @@ export default createStore({
       ]
     },
     {
-      "id":2,
+      "id":3,
       imgsPath:[
-        "2_1.jpg",
-        "2_2.jpg",
-        "2_3.jpg",
-        "2_4.jpg",
-        "2_5.jpg"
+        "3_1.jpg",
+        "3_2.jpg",
+        "3_3.jpg"
+      ]
+    },
+    {
+      "id":4,
+      imgsPath:[
+        "4_1.jpg",
+        "4_2.jpg",
+        "4_3.jpg"
+      ]
+    },
+    {
+      "id":5,
+      imgsPath:[
+        "5_1.jpg",
+        "5_2.jpg",
+        "5_3.jpg",
+        "5_4.jpg",
+        "5_5.jpg",
+        "5_6.jpg"
       ]
     }
   ],
   cart:[],
-  st_CategoriList: ["Нравится", "Горячее", "Предложения", "Основные товары"]
+  st_CategoriList: ["Нравится", "Горячее", "Предложения", "Основные"]
   },
   getters:{
     g_categoriList(state){
@@ -145,7 +174,6 @@ export default createStore({
   },
   mutations:{
     AddProductToCart(state,payload){
-      console.log(payload)
       let newObj = {
         id:payload[0].id,
         count:1,
@@ -198,7 +226,6 @@ export default createStore({
           obj.categori = obj.oldCategori
         }
       }
-      console.log(obj)
     }
   },
   actions:{

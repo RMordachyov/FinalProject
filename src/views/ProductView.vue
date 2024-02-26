@@ -3,10 +3,8 @@
         <div class="row">
             <div class="bread-crumbs">
                 <router-link to="/">Главная</router-link> \
-                <!-- <a :href="`/#categori_${getCategoriIndex}`">{{ getProduct.categori }} </a> \ -->
-                <router-link :to="{ name: 'home', hash: '#categori_'+getCategoriIndex }">{{ getProduct.categori + " " +getCategoriIndex}}</router-link> \
-                
-                <a :href="$route.path">{{ $route.params.title }}</a>
+                <router-link :to="{ name: 'home', hash: '#categori_'+getCategoriIndex }">{{ getProduct.categori}}</router-link> \
+                <router-link :to="$route.path">{{ $route.params.title }}</router-link>
             </div>
             <div class="product_container__heartIcon">
                 <a ><img  :src="favoriteCategori" alt="" @click="changeFavoriteCategori"></a>
@@ -25,7 +23,7 @@
 
                 </div>
                 <div class="product_description_container col-xl-6 col-lg-5 col-md-5">
-                    <div class="product_description_title"><h1>{{ getProduct.description}} Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eligendi laboriosam, repellendus</h1></div>
+                    <div class="product_description_title"><h1>{{ getProduct.description}}</h1></div>
                     <div class="pruduct_status" ><span class="description--status" :class="setStatusClass" style="padding: 10px 10px;">{{ getProduct.status }}</span> Article no.: {{ getProduct.id }}</div>
                     <div class="product_container-age">
                         <div class="product_age" @click="setAge" style="background-color: rgba(70, 155, 0, 0.4);">1</div>
@@ -62,21 +60,7 @@ export default{
         return{
             product:{},
             age:1,
-            statusClass:"",
-            items:[
-                {
-                    text:'Главная',
-                    href:'/'
-                },
-                {
-                    text:"Test",
-                    href:'#'
-                },
-                {
-                    text:"Test2",
-                    href:'#'
-                },
-            ]
+            statusClass:""
         }
         
     },

@@ -45,12 +45,23 @@ export default{
 }
 
 .banner{
-    height: 100%;
-    border: 1px solid #0000004d;
+  position: relative;
+    height: 400px;
     border-radius: 5px;
     /* box-shadow: inset 0px 0px 5px 30px rgb(255, 253, 253); */
     background: url('../img/gor.jpg') no-repeat 0px 25%;
     background-size: 100%;
     padding: 0px;
+}
+
+
+@media (max-width:650px) {
+    .banner{
+        height: 397px;
+        background-size: 200%;
+    }
+    .banner_buttons_container{
+        padding: 0px;
+    }
 }
 </style>

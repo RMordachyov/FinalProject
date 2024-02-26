@@ -10,12 +10,6 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/',
-      hash:'#product-prise',
-      name: 'home',
-      component: HomeView
-    },
-    {
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
@@ -30,7 +24,16 @@ const router = createRouter({
       name: 'cart',
       component: () => import('../views/ShoppingCartView.vue')
     },
-  ]
+  ],
+  scrollBehavior (to, from, savedPosition) {
+    if (to.hash) {
+       return {
+        el: to.hash,
+        behavior: 'smooth'
+      
+      }
+    } 
+ }
 })
 
 export default router
