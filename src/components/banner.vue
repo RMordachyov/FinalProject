@@ -5,8 +5,8 @@
                 <h1>Зелёное Хозяйство</h1>
                 <p>Сломить дерево — секунда, а вырастить — годы</p>
                 <div class="banner_buttons_container">
-                    <a href="#categori_0" class="banner_button button_to">К товарам</a>
-                    <router-link to="about" class="banner_button button_about">О проекте</router-link>
+                    <a href="#categori_0" class="banner_button green-button">К товарам</a>
+                    <router-link to="about" class="banner_button green-button">О проекте</router-link>
                 </div>
             </div> 
         </div>
@@ -63,10 +63,10 @@
     padding: 8px 30px;
     border-radius: 6px;
     /* margin-left: 30px; */
-    background-color: rgba(33, 167, 0, 1);
-    text-decoration: none;
-    color: white;
-    font-weight: 700;
+    
+    text-shadow: 2px 0px 2px #000;
+    font-size: 18px;
+    font-weight: 500;
     box-shadow: 0 0px 3px #00000071;
     text-align: center;
 }

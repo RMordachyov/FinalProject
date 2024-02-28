@@ -14,7 +14,7 @@
                 </div>
                 <div class="product-list">
                     <ProductCartComponent v-for="product in getCart" :product="product"/>
-                <p v-if="showNoProduct">У вас пока нет товаров в корзине... Исправить это можно тут: <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></p>
+                <p style="font-size: 19px;" v-if="showNoProduct">У вас пока нет товаров в корзине... Исправить это можно тут: <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></p>
                 </div>
             </div>
             <div class="order-detail col-lg-3">
@@ -40,7 +40,7 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a href="#" class="send-order-button" @click="getOrder">Оформить заказ</a>
+                    <a href="#" class="send-order-button green-button" @click="getOrder">Оформить заказ</a>
                 </div>
             </div>
         </div>
@@ -109,7 +109,12 @@ export default{
             selectAllProducts.checked = false
         },
         getOrder(e){
-            alert("Заказ оформлен!! Общая сумма к оплате "+Number(this.getTotalOrderPrice.Total).toLocaleString("ru-RU"))
+            if(this.showNoProduct){
+                alert("Уупс! Вы не добавили не одного товара! Это можно поправить перейдя в каталог товаров!")
+            }else{
+                alert("Заказ оформлен!! Общая сумма к оплате "+Number(this.getTotalOrderPrice.Total).toLocaleString("ru-RU"))
+            }
+            
             let selectAllProducts = document.getElementById('selectAllProducts')
             this.selectAllProducts()
             this.deleteProductFromCart()
@@ -130,14 +135,16 @@ export default{
     background-color:  rgba(33, 167, 0, 0.74);
     padding: 8px 30px;
     color: white;
-    font-size: 23px;
-    font-weight: 600;
+   
     border-radius: 10px;
     text-decoration: none;
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer;
+    
 }
+
+
 
 .order-detail{
     padding: 40px 20px;
@@ -156,6 +163,7 @@ export default{
     background-color: white;
     border-radius: 10px;
     padding: 30px 15px;
+    font-size: 20px;
 
 }
 .order-border-price table{

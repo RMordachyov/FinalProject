@@ -44,7 +44,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="product_ading_to_cart"><a  @click="addToCart">Добавить в корзину</a></div>
+                    <div class="product_ading_to_cart "><a class="green-button" @click="addToCart">Добавить в корзину</a></div>
                 </div>
             </div>
         </div> 
