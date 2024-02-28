@@ -150,7 +150,6 @@ export default{
     border-radius: 15px;
     margin-top: 20px;
     padding: 5px;
-
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

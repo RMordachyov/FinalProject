@@ -6,7 +6,7 @@
                 <router-link :to="$route.path">Моя корзина</router-link>
             </div>
             <div class="products-in-cart col-lg-9">
-                <h2>Моя корзина</h2>
+                <h3>Моя корзина</h3>
                 <div class="product-head-list">
                     <input type="checkbox" name="selectAll" id="selectAllProducts" @change="selectAllProducts">
                     <label for="selectAll">Выбрать всё</label>
@@ -14,6 +14,7 @@
                 </div>
                 <div class="product-list">
                     <ProductCartComponent v-for="product in getCart" :product="product"/>
+                <p v-if="showNoProduct">У вас пока нет товаров в корзине... Исправить это можно тут: <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></p>
                 </div>
             </div>
             <div class="order-detail col-lg-3">
@@ -53,7 +54,8 @@ import ProductCartComponent from '../components/ProductCartComponent.vue'
 export default{
     data(){
         return{
-            selectedForDelete: []
+            selectedForDelete: [],
+            chcked:true
         }
     },
     computed:{
@@ -64,29 +66,53 @@ export default{
              let objIndex = this.st_CategoriList.indexOf(this.getProduct.categori);
             return objIndex-1
         },
+        showNoProduct(){
+            if(this.getCart[0] == undefined){
+                return true
+            }else{
+                return false
+            }
+        }
     },
     methods:{
         selectAllProducts(){
             let allCheckboxs = document.querySelectorAll("INPUT[name^='selectProduct']")
             allCheckboxs.forEach(e => {
-                 e.checked = !e.checked;   
+                 e.checked = this.chcked;   
             });
+            if(this.chcked){
+                this.chcked = false
+            }else{
+                this.chcked = true
+            }
+            if(this.showDeleteButton){
+                this.showDeleteButton = false
+            }else{
+                this.showDeleteButton = true
+            }
         },
         deleteProductFromCart(e){
-            e.preventDefault()
-            let selectAllProducts = document.getElementById('selectAllProducts')
-            if(selectAllProducts.checked == true){
-                let temp = JSON.parse(JSON.stringify(this.getCart))
-                this.$store.commit('deleteProductFromCart', temp)
-                selectAllProducts.checked = false
+            if(e == undefined){
+
             }else{
-                selectAllProducts.checked = false
-                return 0
+                e.preventDefault()
             }
-            
+            let allCheckboxs = document.querySelectorAll("INPUT[name^='selectProduct']")
+            allCheckboxs.forEach(el => {
+                if(el.checked){
+                    let id = el.getAttribute("name").split("-")[1]
+                    let obj = this.getCart.find(p => p.id == id)
+                    this.$store.commit('deleteProductFromCart', [obj])
+                    el.checked = false
+                }
+            });
+            selectAllProducts.checked = false
         },
-        getOrder(){
+        getOrder(e){
             alert("Заказ оформлен!! Общая сумма к оплате "+Number(this.getTotalOrderPrice.Total).toLocaleString("ru-RU"))
+            let selectAllProducts = document.getElementById('selectAllProducts')
+            this.selectAllProducts()
+            this.deleteProductFromCart()
         }
     },
     components:{
@@ -146,7 +172,7 @@ export default{
 .shopping-cart{
     border-radius: 10px;
     min-height: 600px;
-    background-color: mintcream;
+    /* background-color: mintcream; */
 }
 
 .product-head-list{

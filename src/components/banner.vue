@@ -2,7 +2,7 @@
     <main>
         <div class="banner_col">
             <div class="banner_container">
-                <h1>Зелень Хозяйство</h1>
+                <h1>Зелёное Хозяйство</h1>
                 <p>Сломить дерево — секунда, а вырастить — годы</p>
                 <div class="banner_buttons_container">
                     <a href="#categori_0" class="banner_button button_to">К товарам</a>

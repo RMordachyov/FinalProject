@@ -20,7 +20,7 @@
                                     <router-link to="/">Главная</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="about">О проекте</router-link>
+                                    <router-link to="/about">О проекте</router-link>
                                 </li>
                                 <li>
                                     <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link>
@@ -75,7 +75,6 @@ export default{
 .top-header{
     padding: 15px 0;
     margin-bottom: 15px;
-    
 }
 
 .tabs {
@@ -101,9 +100,7 @@ export default{
 .top-menu ul li a{
     color: black;
     font-size: 18px;
-    text-decoration: none;
-    
-    
+    text-decoration: none;   
 }
 
 .tools-content{
@@ -134,7 +131,6 @@ export default{
 }
 
 .logo{
-    /* border: 1px solid #000; */
     padding: 5px 0;
     display: flex;
     justify-content: center;

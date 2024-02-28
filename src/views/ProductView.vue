@@ -133,7 +133,6 @@ export default{
         },
         addToCart(e){
             e.preventDefault()
-            console.log("prod view")
             this.$store.commit('AddProductToCart', [this.getProduct, this.age])
         },
         changeFavoriteCategori(e){
@@ -185,7 +184,6 @@ export default{
 
 .product_container_info{
     display: flex;
-    /* justify-content: flex-start; */
     align-items: stretch;
     flex-wrap: wrap;
 }

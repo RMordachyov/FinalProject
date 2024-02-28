@@ -91,7 +91,36 @@
 
 .bread-crumbs a{
     text-decoration: none;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 400;
     color: lightgray;
+}
+
+#app{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Quattrocento", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    /* font-family: "Oswald", cursive;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal; */
+    /* letter-spacing: 1px; */
+}
+  
+main {
+    margin-bottom: auto;
+}
+footer{
+    margin-top: 100px;
+}
+
+ul li a:hover{
+    font-weight: 600;   
+}
+
+.logo1 span{
+    font-size: 25px;
 }

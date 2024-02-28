@@ -4,7 +4,7 @@ import HeaderComponent from './components/HeaderComponent.vue'
 import FooterComponent from './components/FooterComponent.vue'
 </script>
 
-<template>
+<template class="test">
   <header>
     <div class="wrapper">
       <HeaderComponent />
@@ -14,7 +14,7 @@ import FooterComponent from './components/FooterComponent.vue'
   <RouterView />
 
   <footer>
-    <div class="wrapper">
+    <div class="wrapper footer__component">
       <FooterComponent />
     </div>
   </footer>
@@ -23,5 +23,4 @@ import FooterComponent from './components/FooterComponent.vue'
 
 
 <style scoped>
-
 </style>
