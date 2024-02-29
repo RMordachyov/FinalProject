@@ -152,7 +152,7 @@ export default createStore({
       state.cart.forEach(product => {
         price += (product.data.price-(product.data.price*product.data.discount))*product.count
         discount += (product.data.price*product.data.discount)*product.count
-        total += price
+        
       });
       state.cart.forEach(element => {
         p_Count+=element.count
@@ -166,7 +166,7 @@ export default createStore({
       TotalOrderPrice.Order = price
       TotalOrderPrice.Discount = discount
       TotalOrderPrice.Delivery = delivery
-      TotalOrderPrice.Total = total
+      TotalOrderPrice.Total = price+delivery
 
       return TotalOrderPrice
     }

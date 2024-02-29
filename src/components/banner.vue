@@ -45,8 +45,6 @@
     transform: translate(0, -50%);
     background-color: rgba(240, 248, 255, 0.7);
 }
-.banner_container h1{
-}
 
 .banner_container p{
     padding:  5px 0;
