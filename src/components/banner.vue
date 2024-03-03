@@ -6,7 +6,7 @@
                 <p>Сломить дерево — секунда, а вырастить — годы</p>
                 <div class="banner_buttons_container">
                     <a href="#categori_0" class="banner_button green-button">К товарам</a>
-                    <router-link to="about" class="banner_button green-button">О проекте</router-link>
+                    <router-link to="/about" class="banner_button green-button">О проекте</router-link>
                 </div>
             </div> 
         </div>

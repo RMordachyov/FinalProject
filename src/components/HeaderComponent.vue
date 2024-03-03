@@ -143,6 +143,7 @@ export default{
 
 .logo1{
     padding: 5px;
+    word-wrap: none;
 }
 .logo1 img{
     margin-right: 10px;

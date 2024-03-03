@@ -89,8 +89,17 @@
     }
 }
 
+.logo1{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .logo1 img{
-    margin-right: 10px;
+    /* margin-right: 10px; */
+    margin: 0 auto;
+    
 }
 
 
