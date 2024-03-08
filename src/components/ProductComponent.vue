@@ -30,24 +30,36 @@
                 <a href="#" class="card__adding-user">{{ product.sailer }}</a>
             </div>
             <div class="card__bottom--add-button">
-                <a href="#" class="card__add" @click="addToCart">+</a>
+                <button href="#" class="card__add" :class="setAddingButtonStatus[0]" @click="toogleInCart">{{ setAddingButtonStatus[1] }}</button>
             </div>
         </div>
         </div>
-        
+        <ModalMessage :message="message" v-show="showMessage"/>
     </main>
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
+import {mapGetters } from 'vuex'
+import ModalMessage from '../components/ModalMessage.vue'
 export default{
     data(){
         return{
             status:"",
-            statusClass:""
+            statusClass:"",
+            message: "",
+            showMessage:false
         }
     },
     computed:{
+        ...mapGetters(['getCart']),
+        setAddingButtonStatus(){
+            let obj = this.getCart.find(p => p.id === this.product.id)
+            if(obj == undefined){
+                return ["","+"]
+            }else{
+                return ["card__add_green","✔"]
+            }
+        },
         img_src(){
             if(this.product.img == "" || this.product.img == "noPhoto"){
                 return 'src/img/noPhoto.png'
@@ -58,16 +70,12 @@ export default{
         setStatusClass(){
             switch (this.product.status) {
                 case "В наличии":
-                    this.statusClass = "description--status-in-store"
-                    break;
+                    return "description--status-in-store";
                 case "Нет на складе":
-                    this.statusClass = "description--status-no-found"   
-                    break;
+                    return "description--status-no-found";
                 default:
-                    this.statusClass = "description--status-by-way"  
-                    break;
+                    return "description--status-by-way";
             }
-            return this.statusClass
         },
         getCommonPrice(){
              return this.product.price-(this.product.price*this.product.discount)
@@ -91,22 +99,33 @@ export default{
         'product'
     ],
     methods:{
-        addToCart(e){
-            e.preventDefault()
-            this.$store.commit('AddProductToCart', [this.product,1])
+        toogleInCart(){
+            let obj = this.getCart.find(p => p.id === this.product.id)
+            if(obj == undefined){
+                this.$store.dispatch('addProductToCart', [this.product,1])
+                this.message = "Товар \"" + this.product.title + "\" добавлен в корзину" 
+                this.showMessage = true
+                setTimeout(()=>{this.showMessage = false}, 2000)
+                
+            }else{
+                this.$store.dispatch('deleteProductFromCart', [this.product])
+                this.message = "Товар \"" + this.product.title + "\" удалён из корзины"  
+                this.showMessage = true
+                setTimeout(()=>{this.showMessage = false}, 2000)
+            }
+            
+            
         }
         
     },
     components:{
-        
+        ModalMessage
     }
 }
 </script>
 
 <style scoped>
-*{
-    /* border: 1px solid #000; */
-}
+
 .products_component{
     padding: 0px;
     width: 230px;
@@ -170,10 +189,17 @@ export default{
 .card__adding-user{
     font-size: 13px;
     color: lightgrey;
-    background:white url(../img/User.png) no-repeat 0 3px;
-    padding-left: 22px;
+    padding-left: 5px;
     text-align: left;
 }
+
+.card__adding-user::before{
+    content: url(../img/User.png);
+    position: relative;
+    top:3px;
+    margin-right:3px;
+}
+
 .card__bottom--add-button{
     padding: 10px;
 }
@@ -192,12 +218,17 @@ export default{
     border-radius: 6px;
     cursor: pointer;
     margin-top: -5px;
+    border: 0px;
 }
 
 .card__add:hover{
     width: 52px;
     height: 32px;
     background-color: rgba(33, 167, 0, 0.74);
+}
+
+.card__add_green{
+    background-color: rgba(33, 167, 0, 0.74);  
 }
 
 </style>

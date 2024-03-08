@@ -8,8 +8,6 @@
 </template>
 
 <script>
-// 
-import { mapState, mapMutations, mapActions } from 'vuex'
 import ProductsComponent from '../components/ProductComponent.vue'
 export default{
     data(){

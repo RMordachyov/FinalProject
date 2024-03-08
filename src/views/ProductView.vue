@@ -32,8 +32,8 @@
                         <div class="product_age" @click="setAge" style="background-color:rgba(70, 155, 0, 1);">4</div>
                         <div class=""  style="background-color:rgb(255, 255, 255); padding-left: 20px; color: lightgrey;;">(возраст)</div>
                     </div>
-                    <div class="adding_user">
-                        <p>{{ getProduct.sailer }}</p>
+                    <div>
+                        <p class="adding-user">{{ getProduct.sailer }}</p>
                     </div>
                     <div class="product_price">
                         <!-- <h2 @click="addToCart">{{ Number(getProduct.price).toLocaleString("ru-RU")}} &#8376</h2> -->
@@ -44,30 +44,32 @@
                             </div>
                         </div>
                     </div>
-                    <div class="product_ading_to_cart "><a class="green-button" @click="addToCart">Добавить в корзину</a></div>
+                    <div class="product_adding_to_cart "><button class="adding_button_to_cart green_button" @click="toogleInCart">{{ addingButtonText }}</button></div>
                 </div>
             </div>
         </div> 
+        <ModalMessage :message="message" v-show="showMessage"/>
     </main>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
-
+import { mapState, mapGetters } from 'vuex'
+import ModalMessage from '../components/ModalMessage.vue'
 
 export default{
     data(){
         return{
             product:{},
             age:1,
-            statusClass:""
-        }
-        
+            statusClass:"",
+            message: "",
+            showMessage:false,
+            addingButtonText:"Добавить в корзину"
+        } 
     },
-    computed:{
-        
+    computed:{ 
         getProduct(){
-            return this.$store.getters.g_product(this.$route.params.title)
+            return this.$store.getters.getProduct(this.$route.params.title)
         },
         img_src(){
             if(this.getProduct.img == "" || this.getProduct.img == "noPhoto"){
@@ -77,7 +79,7 @@ export default{
             }
         }, 
         getProductImgs(){
-            return this.$store.getters.g_productImg(this.getProduct.id)
+            return this.$store.getters.getProductImg(this.getProduct.id)
         },
         favoriteCategori(){
             if(this.getProduct.categori == "Нравится"){
@@ -104,23 +106,19 @@ export default{
             }
         },
         setStatusClass(){
-            
-            switch (this.getProduct.status) {
+            switch (this.product.status) {
                 case "В наличии":
-                    this.statusClass = "description--status-in-store"
-                    break;
+                    return "description--status-in-store";
                 case "Нет на складе":
-                    this.statusClass = "description--status-no-found"   
-                    break;
+                    return "description--status-no-found";
                 default:
-                    this.statusClass = "description--status-by-way"  
-                    break;
+                    return "description--status-by-way";
             }
-            return this.statusClass
         },
-        ...mapState(['st_CategoriList']),
+        ...mapState(['categoriList']),
+        ...mapGetters(['getCart']),
         getCategoriIndex(){
-             let objIndex = this.st_CategoriList.indexOf(this.getProduct.categori);
+             let objIndex = this.categoriList.indexOf(this.getProduct.categori);
             return objIndex
         },
     },
@@ -131,13 +129,26 @@ export default{
             e.srcElement.src = img.getAttribute("src")
             img.setAttribute("src",temp) 
         },
-        addToCart(e){
-            e.preventDefault()
-            this.$store.commit('AddProductToCart', [this.getProduct, this.age])
+        toogleInCart(){
+            let obj = this.getCart.find(p => p.id === this.getProduct.id)
+            if(obj == undefined){
+                this.$store.dispatch('addProductToCart', [this.getProduct, this.age])
+                this.addingButtonText = "Удалить из корзины"
+                this.message = "Товар \"" + this.getProduct.title + "\" добавлен в корзину" 
+                this.showMessage = true
+                setTimeout(()=>{this.showMessage = false}, 2000)
+            }else{
+                this.$store.dispatch('deleteProductFromCart', [this.getProduct, this.age])
+                this.addingButtonText = "Добавить в корзину"
+                this.message = "Товар \"" + this.getProduct.title + "\" удалён из корзины"  
+                this.showMessage = true
+                setTimeout(()=>{this.showMessage = false}, 2000)
+            }
+            
         },
         changeFavoriteCategori(e){
             e.preventDefault()
-            this.$store.commit('changeFavoriteCategori', this.getProduct)
+            this.$store.dispatch('changeFavoriteCategori', this.getProduct)
         },
         setAge(e){
             e.preventDefault()
@@ -145,19 +156,17 @@ export default{
             e.target.classList.toggle("product_age-active")
         },
         
+    },
+    components:{
+        ModalMessage
     }
 }
 
 
 </script>
 
-
-
-
 <style scoped>
-*{
-    /* border:1px solid #000; */
-}
+
 
 
 #product_price--common{
@@ -194,12 +203,19 @@ export default{
     }
 }
 
-.adding_user{
+.adding-user{
     color: lightgray;
     padding: 15px;
     padding-left: 25px;
-    background:white url(../img/User.png) no-repeat 0 35%;
 }
+
+.adding-user::before{
+    content: url(../img/User.png);
+    position: relative;
+    top:3px;
+    margin-right:3px;
+}
+
 .product_description_container{
     padding-left: 15px;
     display: flex;
@@ -210,24 +226,11 @@ export default{
 .product_description_title{
     padding-top: 15px;
 }
-.product_ading_to_cart{
+.product_adding_to_cart{
     height: 120px;
     position: relative;
 }
-.product_ading_to_cart a{
-    position: absolute;
-    background-color:  rgba(33, 167, 0, 0.74);
-    padding: 15px 30px;
-    color: white;
-    font-size: 23px;
-    font-weight: 600;
-    border-radius: 10px;
-    text-decoration: none;
-    top: 50%;
-    transform: translate(0, -50%);
-    cursor: pointer;
-    
-}
+
 .product_container-age{
     display: flex;
     align-items: stretch;
@@ -300,8 +303,7 @@ export default{
         height: 320px;
         padding: 5px;
     }
-    .product_imgs_container{
-    }
+
     .product_next_imgs{
         max-width: 300px;
         max-height: 120px;

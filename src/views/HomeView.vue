@@ -1,19 +1,22 @@
 <template>
+  
   <main class="HomeView" id="product-prise">
+    
     <div class="fluid-container banner">
-      <banner />
+      <Banner />
     </div>
-    <CategoriProductsComponent v-for="(categori,index) in g_categoriList" :id="`categori_${index}`" :categori="categori"/>
+    <CategoriProductsComponent v-for="(categori,index) in getCategoriList" :id="`categori_${index}`" :categori="categori"/>
+    
   </main>
+  
 </template>
 
 
 <script >
 // import jsonData from '../assets/test.json'
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import CategoriProductsComponent from '../components/CategoriProductsComponent.vue'
-import banner from '../components/Banner.vue'
-import { computed } from 'vue'
+import Banner from '../components/Banner.vue'
 
 export default{
   data(){
@@ -23,8 +26,8 @@ export default{
     }
   },
   computed:{
-    ...mapState(['st_CategoriList']),
-    ...mapGetters(['g_categoriList']),
+    ...mapState(['categoriList']),
+    ...mapGetters(['getCategoriList']),
     chDate(){
      return this.exData = this.$store.state.st_productsList.products[0]
     }
@@ -33,7 +36,8 @@ export default{
     
   },
   components:{
-    CategoriProductsComponent,banner
+    CategoriProductsComponent,
+    Banner
   }
 }
 </script>
@@ -48,10 +52,10 @@ export default{
   position: relative;
     height: 400px;
     border-radius: 5px;
-    /* box-shadow: inset 0px 0px 5px 30px rgb(255, 253, 253); */
     background: url('../img/gor.jpg') no-repeat 0px 25%;
     background-size: 100%;
     padding: 0px;
+    background-position: center
 }
 
 

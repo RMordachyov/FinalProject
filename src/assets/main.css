@@ -28,7 +28,7 @@
     background:rgba(0,0,0,0.4);      
 }
 
-.adding_user{
+/* .adding_user{
     font-size: 17px;
     color: rgb(138, 138, 138);
     background:white url(../img/User.png) no-repeat 0 3px;
@@ -36,6 +36,20 @@
     display: flex;
     align-items: stretch;
     letter-spacing: 1px;
+} */
+
+.adding-user{
+    font-size: 13px;
+    color: lightgrey;
+    padding-left: 5px;
+    text-align: left;
+}
+
+.adding-user::before{
+    content: url(../img/User.png);
+    position: relative;
+    top:3px;
+    margin-right:3px;
 }
 
 .description--status-in-store{
@@ -126,16 +140,29 @@ ul li a:hover{
     font-size: 25px;
 }
 
-.green-button{
+.green_button{
     text-shadow: 2px 0px 2px #000;
     font-size: 19px;
     font-weight: 500;
-    background-color: rgba(33, 167, 0, 1);
+    background-color: rgba(33, 167, 0, 0.8);
     text-decoration: none;
     color: white;
-    box-shadow: 2px 0px 3px rgb(73, 73, 73);
 }
 
-.green-button:hover{
-    box-shadow: 0px 0px 0px rgb(73, 73, 73);
+.green_button:hover{
+    box-shadow: 0 0 0 60px rgba(0,0,0,0) inset, .1em .1em .2em  rgb(73, 73, 73);
+}
+
+.green_button:active{
+    box-shadow: 0 0 0 60px rgba(0,0,0,.05) inset;
+}
+
+.adding_button_to_cart{
+    position: absolute;
+    padding: 15px 30px;
+    border-radius: 10px;
+    top: 50%;
+    transform: translate(0, -50%);
+    cursor: pointer;
+    border: 0px;
 }

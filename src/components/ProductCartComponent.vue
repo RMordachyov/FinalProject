@@ -1,6 +1,6 @@
 <template>
     <main class="cart-product-card fluid-container">
-        <input type="checkbox" class="cart-product-card__select" :name="`selectProduct-${product.id}`">
+        <input type="checkbox" class="cart-product-card__select" :value="product.data.id" :checked="changeChecked" v-model="model">
         <!-- <div class="cart-product-card__select">
             
         </div> -->
@@ -25,7 +25,7 @@
                 <span> год</span>
             </div>
             <div class="content__adding-user">
-                <div class="adding_user">{{ product.data.sailer }}</div>
+                <div class="adding-user" style=" font-size: 17px;">{{ product.data.sailer }}</div>
             </div>
         </div>
         <div class="cart-product-card__tools">
@@ -55,15 +55,27 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from 'vuex'
 export default{
     data(){
         return{
             heartImgPath:"",
-            statusClass:""
+            statusClass:"",
+            
         }
     },
+    props:[
+        'product','changeChecked'
+    ],
+        
     computed:{
+        model: {
+            get() {
+                return this.changeChecked;
+            },
+            set(value) {
+                this.$emit("setSelectedOptions", [this.product.data.id, value]);
+            },
+        },
         favoriteCategori(){
             if(this.product.data.categori == "Нравится"){
                 return  "../src/img/Heart-red.png"
@@ -79,19 +91,15 @@ export default{
             }
         }, 
         setStatusClass(){
-            
-            switch (this.product.data.status) {
+            switch (this.product.status) {
                 case "В наличии":
-                    this.statusClass = "description--status-in-store"
-                    break;
+                    return "description--status-in-store";
                 case "Нет на складе":
-                    this.statusClass = "description--status-no-found"   
-                    break;
+                    return "description--status-no-found";
                 default:
-                    this.statusClass = "description--status-by-way"  
-                    break;
+                    return "description--status-by-way";
             }
-            return this.statusClass
+            
         },
         getCommonPrice(){
              return (this.product.data.price-(this.product.data.price*this.product.data.discount))*this.product.count
@@ -111,25 +119,23 @@ export default{
             }
         }
     },
-    props:[
-        'product'
-    ],
+    
     methods:{
         deleteProductFromCart(e){
             e.preventDefault()
-            this.$store.commit('deleteProductFromCart', [this.product])
+            this.$store.dispatch('deleteProductFromCart', [this.product.data.id])
         },
         incrementProductCount(e){
             e.preventDefault()
-            this.$store.commit('incrementProductCount', this.product)
+            this.$store.dispatch('incrementProductCount', this.product)
         },
         decreaseProductCount(e){
             e.preventDefault()
-            this.$store.commit('decreaseProductCount', this.product)
+            this.$store.dispatch('decreaseProductCount', this.product)
         },
         changeFavoriteCategori(e){
             e.preventDefault()
-            this.$store.commit('changeFavoriteCategori', this.product)
+            this.$store.dispatch('changeFavoriteCategori', this.product)
         }
     },
     components:{
@@ -140,9 +146,7 @@ export default{
 </script>
 
 <style scoped>
-*{
-    /* border: 1px solid #000; */
-}
+
 .cart-product-card{
     position: relative;
     height: 100%;
@@ -156,6 +160,7 @@ export default{
     flex-wrap: wrap;
     box-shadow: 0 1px 3px #00000071;
 }
+
 
 .cart-product-card__image{
     min-width: 200px;

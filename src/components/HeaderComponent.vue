@@ -1,6 +1,4 @@
-
 <template>
-    <main>
         <div class="top-header">
             <div class="header fluid-container">
                 <div class="row">
@@ -44,13 +42,10 @@
                 </div>
             </div>
         </div> 
-        
-        
-    </main>
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import {  mapGetters } from 'vuex'
 export default{
     data(){
         return{

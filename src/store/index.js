@@ -101,13 +101,14 @@ export default createStore({
       ]
     }
   ],
+  testForDelete:[],
   cart:[],
-  st_CategoriList: ["Нравится", "Горячее", "Предложения", "Основные"]
+  categoriList: ["Нравится", "Горячее", "Предложения", "Основные"]
   },
   getters:{
-    g_categoriList(state){
+    getCategoriList(state){
       let outList = []
-      state.st_CategoriList.forEach(categori => {
+      state.categoriList.forEach(categori => {
       let objCategori = {
           "categori":categori,
           "products":state.st_productsList.filter(p => p.categori === categori)
@@ -119,10 +120,10 @@ export default createStore({
       });
       return outList
     },
-    g_product: (state) => (title) => {
+    getProduct: (state) => (title) => {
       return state.st_productsList.find(p => p.title === title)
     },
-    g_productImg: (state) => (id) => {
+    getProductImg: (state) => (id) => {
       let img = state.st_productsImgList.find(p => p.id === id)
       if(img == undefined){
         img = {id:id, imgsPath:["noPhoto.png"]}
@@ -174,6 +175,10 @@ export default createStore({
     
   },
   mutations:{
+    testForDelete(state,payload){
+      state.testForDelete.push(payload)
+      console.log(state.testForDelete);
+    },
     AddProductToCart(state,payload){
       let newObj = {
         id:payload[0].id,
@@ -193,8 +198,8 @@ export default createStore({
       
     },
     deleteProductFromCart(state,payload){
-      payload.forEach(element => {
-        let obj = state.cart.find(p => p.id == element.id);
+      payload.forEach(id => {
+        let obj = state.cart.find(p => p.id == id);
         let objIndex = state.cart.indexOf(obj);
         if(objIndex > -10){
           state.cart.splice(objIndex,1);
@@ -230,7 +235,21 @@ export default createStore({
     }
   },
   actions:{
-
+    addProductToCart(context, payload){
+      context.commit('AddProductToCart',payload)
+    },
+    deleteProductFromCart(context, payload){
+      context.commit('deleteProductFromCart',payload)
+    },
+    incrementProductCount(context, payload){
+      context.commit('incrementProductCount',payload)
+    },
+    decreaseProductCount(context, payload){
+      context.commit('decreaseProductCount',payload)
+    },
+    changeFavoriteCategori(context, payload){
+      context.commit('changeFavoriteCategori',payload)
+    },
   },
   modules:{
     

@@ -1,5 +1,4 @@
 <template>
-    <main>
         <div class="top-footer">
             <div class="footer fluid-container">
                     <div class="footer-logo ">
@@ -30,7 +29,6 @@
                     </div>
             </div>
         </div>
-    </main>
 </template>
 
 <style scoped>
