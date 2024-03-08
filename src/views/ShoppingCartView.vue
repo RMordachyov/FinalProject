@@ -8,7 +8,7 @@
             <div class="products-in-cart col-lg-9">
                 <h3>Моя корзина</h3>
                 <div class="product-head-list" v-if="!showNoProduct">
-                    <input type="checkbox" name="selectAll" id="selectAllProducts" @change="selectAllProducts">
+                    <input type="checkbox" name="selectAll" id="selectAllProducts" @change="selectAllProducts" :checked="changeChecked">
                     <label for="selectAll">Выбрать всё</label>
                     <button href="#" class="delete-button" @click="deleteProductFromCart">Удалить</button>
                 </div>
@@ -40,11 +40,10 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a href="#" class="send-order-button green_button" @click="getOrder">Оформить заказ</a>
+                    <button href="#" class="send-order-button green_button" @click="getOrder">Оформить заказ</button>
                 </div>
             </div>
         </div>
-        {{ test }}
     </main>
 </template>
 
@@ -66,9 +65,6 @@ export default{
         getCategoriIndex(){
              let objIndex = this.st_CategoriList.indexOf(this.getProduct.categori);
             return objIndex-1
-        },
-        test(){
-            return this.selectedOptions
         },
         showNoProduct(){
             return this.getCart[0] == undefined
@@ -105,8 +101,9 @@ export default{
 
         deleteProductFromCart(e){
             this.$store.commit('deleteProductFromCart', this.selectedOptions)
-            this.selectedOptions.length=0
+            this.changeChecked = true
             this.changeChecked = false
+            this.selectedOptions.length=0
         },
         getOrder(e){
             if(this.showNoProduct){
@@ -136,6 +133,7 @@ export default{
     top: 50%;
     transform: translate(0, -50%);
     cursor: pointer; 
+    border: 0px;
 }
 
 .order-detail{

@@ -60,7 +60,6 @@ export default{
         return{
             heartImgPath:"",
             statusClass:"",
-            
         }
     },
     props:[

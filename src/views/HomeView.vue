@@ -8,7 +8,6 @@
     <CategoriProductsComponent v-for="(categori,index) in getCategoriList" :id="`categori_${index}`" :categori="categori"/>
     
   </main>
-  
 </template>
 
 

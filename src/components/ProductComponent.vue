@@ -30,7 +30,7 @@
                 <a href="#" class="card__adding-user">{{ product.sailer }}</a>
             </div>
             <div class="card__bottom--add-button">
-                <button href="#" class="card__add" :class="setAddingButtonStatus[0]" @click="toogleInCart">{{ setAddingButtonStatus[1] }}</button>
+                <button href="#" class="card__add" :class="setAddingButtonStatus[0]" @click="toogleInCart">{{ setAddingButtonStatus[1] }}  </button>
             </div>
         </div>
         </div>
