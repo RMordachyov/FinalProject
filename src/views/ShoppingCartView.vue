@@ -96,6 +96,7 @@ export default{
         deleteProductFromCart(e){
             this.$store.commit('deleteProductFromCart', this.selectedOptions)
             this.selectedOptions.length=0
+            this.changeChecked = false
         },
         getOrder(e){
             if(this.showNoProduct){
