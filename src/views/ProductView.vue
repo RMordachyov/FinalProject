@@ -60,6 +60,7 @@
             </div>
         </div> 
         <ModalMessage :message="message" v-show="showMessage"/>
+        
     </main>
 </template>
 

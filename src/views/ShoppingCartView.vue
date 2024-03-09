@@ -8,13 +8,19 @@
             <div class="products-in-cart col-lg-9">
                 <h3>Моя корзина</h3>
                 <div class="product-head-list" v-if="!showNoProduct">
-                    <input type="checkbox" name="selectAll" id="selectAllProducts" @change="selectAllProducts" :checked="changeChecked">
-                    <label for="selectAll">Выбрать всё</label>
+
+                    <label class="checkbox-other">
+                        <input type="checkbox" name="selectAll" id="selectAllProducts" @change="selectAllProducts" :checked="changeChecked">
+                        <span>Выбрать всё</span>
+                    </label>
                     <button href="#" class="delete-button" @click="deleteProductFromCart">Удалить</button>
                 </div>
                 <div class="product-list">
                     <ProductCartComponent v-for="product in getCart" :product="product">
-                        <input type="checkbox" class="cart-product-card__select" :value="product.data.id" v-model="selectedOptions">
+                        <label class="checkbox-other">
+                            <input type="checkbox" class="cart-product-card__select" :value="product.data.id" v-model="selectedOptions">
+                            <span></span>
+                        </label>
                     </ProductCartComponent>
                 <p style="font-size: 19px;" v-if="showNoProduct">У вас пока нет товаров в корзине... Исправить это можно тут: <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></p>
                 </div>
@@ -93,8 +99,9 @@ export default{
             }
         },
 
-        deleteProductFromCart(e){
+        deleteProductFromCart(){
             this.$store.commit('deleteProductFromCart', this.selectedOptions)
+            this.changeChecked = false
             this.selectedOptions.length=0
         },
         getOrder(e){
@@ -209,4 +216,7 @@ export default{
 .delete-button:active{
     box-shadow: 0 0 0 60px rgba(0,0,0,.05) inset;
 }
+
+
+
 </style>

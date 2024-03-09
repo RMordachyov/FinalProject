@@ -109,20 +109,16 @@ export default{
     },
     
     methods:{
-        deleteProductFromCart(e){
-            e.preventDefault()
+        deleteProductFromCart(){
             this.$store.dispatch('deleteProductFromCart', [this.product.data.id])
         },
-        incrementProductCount(e){
-            e.preventDefault()
+        incrementProductCount(){
             this.$store.dispatch('incrementProductCount', this.product)
         },
-        decreaseProductCount(e){
-            e.preventDefault()
+        decreaseProductCount(){
             this.$store.dispatch('decreaseProductCount', this.product)
         },
-        changeFavoriteCategori(e){
-            e.preventDefault()
+        changeFavoriteCategori(){
             this.$store.dispatch('changeFavoriteCategori', this.product)
         }
     },
@@ -182,19 +178,9 @@ export default{
     .cart-product-card__content{
         min-width: 220px;
     }
-    .cart-product-card__select{
-    position: absolute;
-    left: 15px;
-    top: 15px;
-    width: 20px;
-    height: 20px;
-}
+
 }
 
-.cart-product-card__select input{
-    width: 15px;
-    height: 15px;
-}
 
 .cart-product-card__image img{
     border-radius: 20px;
