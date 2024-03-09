@@ -1,47 +1,46 @@
 <template>
-        <div class="top-header">
-            <div class="header fluid-container">
-                <div class="row">
-                    <div class="logo col-lg-3">
-                        <div class="logo1">
-                            <img src="../img/logo1.png" alt="logo1">
-                            <span>Зелёное Хозяйство</span>
-                        </div>
-                        <div class="logo2">
-                            <img src="../img/logo.png" alt="logo2">
-                        </div>
-                    </div>
-                    <div class="tabs col-lg-6">
-                        <div class="top-menu">
-                            <ul>
-                                <li>
-                                    <router-link to="/">Главная</router-link>
-                                </li>
-                                <li>
-                                    <router-link to="/about">О проекте</router-link>
-                                </li>
-                                <li>
-                                    <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="tools col-lg-3">
-                        <div class="tools-content">
-                            <img src="../img/Search.png" alt="user" style="width: 28px; height: 28px; margin-right: 10px; margin-top: 3px;">
-                            <img src="../img/Login.png" alt="user">
-                            <div class="product-count-in-cart">
-                                <router-link to="/cart"> <img src="../img/cart.png" alt="cart"></router-link>
-                                <div class="product-count-in-cart-count">{{ getProductCountInCart }}</div>
-                            </div>
-                            
-                            
-                        </div>
-                        
+    <div class="header fluid-container">
+        <div class="row">
+            <div class="header__logo col-lg-3">
+                <div class="logo__logo1">
+                    <img src="../img/logo1.png" alt="logo1">
+                    <span>Зелёное Хозяйство</span>
+                </div>
+                <div class="logo__logo2">
+                    <img src="../img/logo.png" alt="logo2">
+                </div>
+            </div>
+            <div class="header__tabs col-lg-6">
+                <div class="top-menu">
+                    <ul>
+                        <li>
+                            <router-link to="/">Главная</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/about">О проекте</router-link>
+                        </li>
+                        <li>
+                            <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header__tools col-lg-3">
+                <div class="tools-content">
+                    <img src="../img/Search.png" alt="user" style="width: 28px; height: 28px; margin-right: 10px; margin-top: 3px;">
+                    <img src="../img/Login.png" alt="user">
+                    <div class="product-count-in-cart">
+                        <router-link to="/cart"> <img src="../img/cart.png" alt="cart"></router-link>
+                        <div class="product-count-in-cart-count">{{ getProductCountInCart }}</div>
                     </div>
                 </div>
             </div>
-        </div> 
+        </div>
+    </div>
+    <div class="cart_goto" v-show="showCartModalIcon">
+        <router-link to="/cart"> <img src="../img/cart.png" alt="cart"></router-link>
+        <div class="product-count-in-cart-count">{{ getProductCountInCart }}</div>
+    </div>
 </template>
 
 <script>
@@ -49,10 +48,24 @@ import {  mapGetters } from 'vuex'
 export default{
     data(){
         return{
+            showCartModalIcon: false,
         }
+    },
+    created () {
+        window.addEventListener('scroll', this.handleScroll)
     },
     computed:{
         ...mapGetters(['getProductCountInCart']),
+    },
+    methods:{
+        handleScroll (event) {
+            var top = event.srcElement.scrollingElement.scrollTop
+            if(top > 250){
+                this.showCartModalIcon = true
+            }else{
+                this.showCartModalIcon = false
+            }
+        }
     },
     props:[
         'product'
@@ -65,14 +78,23 @@ export default{
 
 
 <style scoped>
-
-
-.top-header{
-    padding: 15px 0;
-    margin-bottom: 15px;
+.cart_goto{
+  position: fixed;
+  bottom: 15%;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  border: 1px solid lightgrey;
+  border-radius: 50%;
+  padding: 5px;
 }
 
-.tabs {
+.cart_goto img{
+    width: 36px;
+    height: 36px;
+}
+
+.header__tabs {
     display: flex;
     justify-content: center; 
 }
@@ -119,31 +141,31 @@ export default{
     right: -10px;
 }
 
-.tools img{
+.header__tools img{
     width: 36px;
     height: 36px;
     margin-left: 10px;
 }
 
-.logo{
+.header__logo{
     padding: 5px 0;
     display: flex;
     justify-content: center;
     
 }
-.logo img{
+.header__logo img{
     width: 36px;
     height: 36px;
 }
 
-.logo1{
+.logo__logo1{
     padding: 5px;
     word-wrap: none;
 }
-.logo1 img{
+.logo__logo1 img{
     margin-right: 10px;
 }
-.logo2{
+.logo__logo2{
     border-left: 1px solid #0000004d;
     width: 40px;
     height: 50px;
@@ -153,7 +175,7 @@ export default{
 
 }
 .header{
-    padding-left: 100px;
-    padding-right: 100px;
+    padding: 15px 100px;
+    margin-bottom: 10px;
 }
 </style>

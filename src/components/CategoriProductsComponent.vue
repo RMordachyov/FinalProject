@@ -1,9 +1,8 @@
 <template>
-    <main class="container categori_products_component">
-        <div class="categori_products_component">
+    <main class="container categori">
             <h3>{{ categori.categori }}</h3>
             <ProductsComponent v-for="(product, index) in categori.products" :product="product" :key="index"/>
-        </div>
+        
     </main>
 </template>
 
@@ -27,7 +26,7 @@ export default{
 </script>
 
 <style scoped>
-.categori_products_component{
+.categori{
     display: flex;
     flex-direction: row;
     flex-wrap:wrap;
@@ -37,19 +36,19 @@ export default{
     margin-bottom: 30px;
 }
 
-.categori_products_component h3{
+.categori h3{
     padding-left: 30px;
     width: 100%;
 }
 
 @media (min-width:992px) {
-    .categori_products_component{
+    .categori{
         justify-content: flex-start;
     }
 }
 
 @media (max-width:575px) {
-    .categori_products_component{
+    .categori{
         justify-content: center;
     }
 }

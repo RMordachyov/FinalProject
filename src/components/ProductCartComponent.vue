@@ -1,9 +1,6 @@
 <template>
     <main class="cart-product-card fluid-container">
-        <input type="checkbox" class="cart-product-card__select" :value="product.data.id" :checked="changeChecked" v-model="model">
-        <!-- <div class="cart-product-card__select">
-            
-        </div> -->
+        <slot></slot>
         <div class="cart-product-card__image">
             <router-link class="card__image" :to="`/product/${product.data.title}`">
                 <img :src="img_src" alt="">
@@ -39,14 +36,14 @@
                 
             </div>
             <div class="cart-product-card__tools--change">
-                <a ><img  :src="favoriteCategori" alt="" @click="changeFavoriteCategori"></a>
-                <a href="#" @click="deleteProductFromCart"><img src="../img/Frame 825.png" alt=""></a>
+                <img  :src="favoriteCategori" alt="" @click="changeFavoriteCategori">
+                <img src="../img/Frame 825.png" alt="" @click="deleteProductFromCart">
             </div>
             <div class="cart-product-card__tools--count">
                 
-                <a href="#" @click="decreaseProductCount">-</a>
-                <a href="#">{{ product.count }}</a>
-                <a href="#" @click="incrementProductCount">+</a>
+                <button href="#" @click="decreaseProductCount">-</button>
+                <button href="#">{{ product.count }}</button>
+                <button href="#" @click="incrementProductCount">+</button>
 
                 
             </div>
@@ -67,14 +64,6 @@ export default{
     ],
         
     computed:{
-        model: {
-            get() {
-                return this.changeChecked;
-            },
-            set(value) {
-                this.$emit("setSelectedOptions", [this.product.data.id, value]);
-            },
-        },
         favoriteCategori(){
             if(this.product.data.categori == "Нравится"){
                 return  "../src/img/Heart-red.png"
@@ -180,13 +169,7 @@ export default{
     margin-left: auto;
 }
 
-.cart-product-card__select{
-    position: absolute;
-    left: -25px;
-    top: 5px;
-    width: 20px;
-    height: 20px;
-}
+
 .cart-product-card__content{
         max-width: 400px;
     }
@@ -264,13 +247,14 @@ export default{
 
 .cart-product-card__tools--change img{
     margin-right: 15px;
+    cursor: pointer;
 }
 .cart-product-card__tools--count{
-    height: 50px;
+    height: 70px;
     padding: 10px;
     text-align: right;
 }
-.cart-product-card__tools--count a{
+.cart-product-card__tools--count button{
     padding: 5px 15px;
     text-align: center;
     text-decoration: none;
@@ -278,6 +262,14 @@ export default{
     border-radius: 5px;
     margin: 1px;
     color: white;
+    border: 0px;
     font-weight: 600;
+    font-size: 18px;
+    text-shadow: 0 0px 2px #000;
+}
+
+.cart-product-card__tools--count button:hover{
+    text-shadow: 0 0px 1px #000;
+    font-size: 19px;
 }
 </style>

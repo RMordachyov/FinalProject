@@ -15,9 +15,8 @@ export default{
 <style>
 .modall-message{
     position: fixed;
-    /* width: 300px; */
     z-index: 100000;
-    bottom: 50px;
+    top: 10%;
     right: 20px;
     margin: 0 auto;
     padding: 10px;

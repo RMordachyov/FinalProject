@@ -1,34 +1,29 @@
 <template>
-        <div class="top-footer">
-            <div class="footer fluid-container">
-                    <div class="footer-logo ">
-                        <div class="logo1">
-                            <img src="../img/logo1.png" alt="logo1">
-                            <span>Зелёное Хозяйство</span>
-                            <div class="soc-links">
-                            <ul>
-                                <li><a href="#" class="soc_links_icon" id="soc_links_f"></a></li>
-                                <li><a href="#" class="soc_links_icon" id="soc_links_w"></a></li>
-                                <li><a href="#" class="soc_links_icon" id="soc_links_T"></a></li>
-                                <li><a href="#" class="soc_links_icon" id="soc_links_tw"></a></li>
-                                
-                            </ul>
-                            <!-- <img src="#" alt="." class="soc_links_icon"> -->
-                        </div>
-                        </div>
-                        
-                    </div>
-                    <div class=" ">
-                        <div class="top-menu-footer">
-                            <ul>
-                                <li><router-link to="/">Главная</router-link></li>
-                                <li><router-link to="/about">О проекте</router-link></li>
-                                <li><router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></li>
-                            </ul>
-                        </div>
-                    </div>
+    <div class="footer fluid-container">
+        <div class="footer__logo ">
+            <div class="logo1">
+                <img src="../img/logo1.png" alt="logo1">
+                <span>Зелёное Хозяйство</span>
+                <div class="soc-links">
+                <ul>
+                    <li><a href="#" class="soc_links_icon" id="soc_links_f"></a></li>
+                    <li><a href="#" class="soc_links_icon" id="soc_links_w"></a></li>
+                    <li><a href="#" class="soc_links_icon" id="soc_links_T"></a></li>
+                    <li><a href="#" class="soc_links_icon" id="soc_links_tw"></a></li>
+                </ul>
+            </div>
             </div>
         </div>
+        <div>
+            <div class="footer__top-menu">
+                <ul>
+                    <li><router-link to="/">Главная</router-link></li>
+                    <li><router-link to="/about">О проекте</router-link></li>
+                    <li><router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </template>
 
 <style scoped>
@@ -36,6 +31,7 @@
     /* border:1px solid #000; */
 }
 .footer{
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: start;
@@ -65,14 +61,14 @@
     padding: 10px ;
 }
 
-.top-menu-footer ul{
+.footer__top-menu ul{
     gap: 30px;
     margin: 0;
     padding: 0;
 }
 
 @media (min-width:320px) and (max-width:992px) {
-    .top-menu-footer ul{
+    .footer__top-menu ul{
         text-align: center;
     }
 }
@@ -82,7 +78,7 @@
     .footer{
         justify-content: center;
     }
-    .footer-logo{
+    .footer__logo{
         margin-bottom: 30px;
     }
 }
@@ -102,19 +98,19 @@
 
 
 
-.top-menu-footer ul li{
+.footer__top-menu ul li{
     list-style: none;
     margin: 8px; 
 }
 
-.top-menu-footer ul li a{
+.footer__top-menu ul li a{
     color: black;
     font-size: 18px;
     text-decoration: none;
     
 }
 
-.footer-logo{
+.footer__logo{
     padding: 5px 0;
     display: flex;
     justify-content: center;
@@ -122,7 +118,7 @@
     margin-right: 30px;
     
 }
-.footer-logo img{
+.footer__logo img{
     width: 36px;
     height: 36px;
 }

@@ -3,7 +3,7 @@ import jsonData from '../assets/test.json'
 
 export default createStore({
   state:{
-    st_productsList: [
+    productsList: [
       {
           "id":1,
           "title": "Туя",
@@ -62,7 +62,7 @@ export default createStore({
     
   
   ],
-  st_productsImgList:[
+  productsImgList:[
     {
       "id":1,
       imgsPath:[
@@ -111,7 +111,7 @@ export default createStore({
       state.categoriList.forEach(categori => {
       let objCategori = {
           "categori":categori,
-          "products":state.st_productsList.filter(p => p.categori === categori)
+          "products":state.productsList.filter(p => p.categori === categori)
         }
       if(objCategori.products.length != 0){
         outList.push(objCategori)
@@ -121,10 +121,10 @@ export default createStore({
       return outList
     },
     getProduct: (state) => (title) => {
-      return state.st_productsList.find(p => p.title === title)
+      return state.productsList.find(p => p.title === title)
     },
     getProductImg: (state) => (id) => {
-      let img = state.st_productsImgList.find(p => p.id === id)
+      let img = state.productsImgList.find(p => p.id === id)
       if(img == undefined){
         img = {id:id, imgsPath:["noPhoto.png"]}
         
@@ -175,10 +175,6 @@ export default createStore({
     
   },
   mutations:{
-    testForDelete(state,payload){
-      state.testForDelete.push(payload)
-      console.log(state.testForDelete);
-    },
     AddProductToCart(state,payload){
       let newObj = {
         id:payload[0].id,
@@ -221,7 +217,7 @@ export default createStore({
       
     },
     changeFavoriteCategori(state,payload){
-      let obj = state.st_productsList.find(p => p.id == payload.id);
+      let obj = state.productsList.find(p => p.id == payload.id);
       if(obj.categori != "Нравится"){
         obj.oldCategori = obj.categori
         obj.categori = "Нравится"

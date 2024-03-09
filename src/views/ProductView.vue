@@ -16,8 +16,8 @@
                         <img :src="img_src" alt="">
                     </div>
                     <div class="product_next_imgs">
-                        <div class="product_next_img" v-for="img in getProductImgs.imgsPath">
-                            <img :src="`../src/img/products/${img}`" alt="" @click="changeImg">
+                        <div class="product_next_img" v-for="(img, index) in getProductImgs.imgsPath">
+                            <img :src="`../src/img/products/${img}`" alt="" @click="changeImg(index)">
                         </div>
                     </div>
 
@@ -26,17 +26,28 @@
                     <div class="product_description_title"><h1>{{ getProduct.description}}</h1></div>
                     <div class="pruduct_status" ><span class="description--status" :class="setStatusClass" style="padding: 10px 10px;">{{ getProduct.status }}</span> Article no.: {{ getProduct.id }}</div>
                     <div class="product_container-age">
-                        <div class="product_age" @click="setAge" style="background-color: rgba(70, 155, 0, 0.4);">1</div>
-                        <div class="product_age" @click="setAge" style="background-color:rgba(70, 155, 0, 0.6) ;">2</div>
-                        <div class="product_age" @click="setAge" style="background-color:rgba(70, 155, 0, 0.8);">3</div>
-                        <div class="product_age" @click="setAge" style="background-color:rgba(70, 155, 0, 1);">4</div>
-                        <div class=""  style="background-color:rgb(255, 255, 255); padding-left: 20px; color: lightgrey;;">(возраст)</div>
+                        <div class="form_radio_btn">
+                            <input id="radio-1" type="radio" name="radio" value="1" v-model="selectedAge">
+                            <label for="radio-1">1</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-2" type="radio" name="radio" value="2" v-model="selectedAge">
+                            <label for="radio-2">2</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-3" type="radio" name="radio" value="3" v-model="selectedAge">
+                            <label for="radio-3">3</label>
+                        </div>
+                        <div class="form_radio_btn">
+                            <input id="radio-4" type="radio" name="radio" value="4" v-model="selectedAge">
+                            <label for="radio-4">4</label>
+                        </div>
+                        <div style="background-color:rgb(255, 255, 255); padding-left: 2px; color: lightgrey;;">(возраст)</div>
                     </div>
                     <div>
                         <p class="adding-user">{{ getProduct.sailer }}</p>
                     </div>
                     <div class="product_price">
-                        <!-- <h2 @click="addToCart">{{ Number(getProduct.price).toLocaleString("ru-RU")}} &#8376</h2> -->
                         <div class=" price--common " id="product_price--common" :class="withDiscount" >{{ Number(getCommonPrice).toLocaleString("ru-RU")}} &#8376</div>
                         <div class="price--discount" id="product_price--discount"  >
                             <div v-if="showDiscount">
@@ -44,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="product_adding_to_cart "><button class="adding_button_to_cart green_button" @click="toogleInCart">{{ addingButtonText }}</button></div>
+                    <div class="product_adding_to_cart "><button class="adding_button_to_cart green_button" @click="toogleInCart">{{ checkStatusInCart }}</button></div>
                 </div>
             </div>
         </div> 
@@ -64,10 +75,25 @@ export default{
             statusClass:"",
             message: "",
             showMessage:false,
-            addingButtonText:"Добавить в корзину"
+            selectedAge:""
         } 
     },
-    computed:{ 
+    computed:{
+        selectCheckBox(){
+            if(this.selectedAge.length >= 1){
+                return false
+            }else{
+                return true
+            }
+        },
+        checkStatusInCart(){
+            let obj = this.getCart.find(p => p.id === this.getProduct.id)
+            if(obj == undefined){
+                return "Добавить в корзину"
+            }else{
+                return "Удалить из корзины"
+            }
+        },
         getProduct(){
             return this.$store.getters.getProduct(this.$route.params.title)
         },
@@ -123,39 +149,29 @@ export default{
         },
     },
     methods:{
-        changeImg(e){
-            let img = document.querySelector('DIV[class="product_main_img"]>IMG')
-            let temp = e.srcElement.src
-            e.srcElement.src = img.getAttribute("src")
-            img.setAttribute("src",temp) 
+        changeImg(index){
+            let tempImg = this.getProduct.img
+            this.getProduct.img = this.getProductImgs.imgsPath[index]
+            this.getProductImgs.imgsPath[index] = tempImg
         },
         toogleInCart(){
             let obj = this.getCart.find(p => p.id === this.getProduct.id)
             if(obj == undefined){
-                this.$store.dispatch('addProductToCart', [this.getProduct, this.age])
-                this.addingButtonText = "Удалить из корзины"
+                this.$store.dispatch('addProductToCart', [this.getProduct, this.selectedAge])
                 this.message = "Товар \"" + this.getProduct.title + "\" добавлен в корзину" 
                 this.showMessage = true
                 setTimeout(()=>{this.showMessage = false}, 2000)
             }else{
-                this.$store.dispatch('deleteProductFromCart', [this.getProduct, this.age])
-                this.addingButtonText = "Добавить в корзину"
+                this.$store.dispatch('deleteProductFromCart', [this.getProduct.id])
                 this.message = "Товар \"" + this.getProduct.title + "\" удалён из корзины"  
                 this.showMessage = true
                 setTimeout(()=>{this.showMessage = false}, 2000)
             }
-            
         },
         changeFavoriteCategori(e){
             e.preventDefault()
             this.$store.dispatch('changeFavoriteCategori', this.getProduct)
         },
-        setAge(e){
-            e.preventDefault()
-            this.age = e.target.innerText
-            e.target.classList.toggle("product_age-active")
-        },
-        
     },
     components:{
         ModalMessage
@@ -220,7 +236,6 @@ export default{
     padding-left: 15px;
     display: flex;
     flex-direction: column;
-
 }
 
 .product_description_title{
@@ -235,32 +250,16 @@ export default{
     display: flex;
     align-items: stretch;
 }
+
 .pruduct_status{
     color: lightgray;
     padding-bottom: 20px;
     padding-left: 15px;
 }
 
-.product_age{
-    width: 30px;
-    height: 30px;
-    border: 1px solid #00000079;
-    margin-left: 20px;
-    border-radius: 5px;
-    text-align: center;
-}
-
-
-.product_age-active{
-    border: 1px solid red;
-    color: red;
-    font-weight: 600;
-}
 .product_container{
     margin-top: 50px;
 }
-
-
 
 .product_imgs_container{
     display: flex;
@@ -307,7 +306,7 @@ export default{
     .product_next_imgs{
         max-width: 300px;
         max-height: 120px;
-        padding:20px;
+        padding:1px;
         display: flex;
         flex-direction: row;
         overflow-y: hidden;
@@ -316,17 +315,14 @@ export default{
     .product_next_img{
         min-width: 80px;
         min-height: 80px;
+        width: 100%;
+        height: 100%;
         border-radius: 20px;
         margin-left: 10px;
         
     }
     
-    .product_next_img img{
-        border-radius: 20px;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-    }
+
     .product_ading_to_cart a{
         position: absolute;
         padding: 10px 16px;
@@ -347,12 +343,42 @@ export default{
 
 .product_next_img img{
     border-radius: 20px;
-    width: 100%;
-    height: 100%;
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
     overflow: hidden;
 }
 
-
+.form_radio_btn {
+	display: inline-block;
+	margin-right: 10px;
+}
+.form_radio_btn input[type=radio] {
+	display: none;
+}
+.form_radio_btn label {
+	display: inline-block;
+	cursor: pointer;
+	padding: 0px 15px;
+	line-height: 34px;
+	border: 1px solid #999;
+	border-radius: 6px;
+	user-select: none;
+}
+ 
+.form_radio_btn input[type=radio]:checked + label {
+	background: rgba(33, 167, 0, 0.6)
+}
+ 
+.form_radio_btn label:hover {
+	background: rgba(33, 167, 0, 0.2)
+}
+ 
+.form_radio_btn input[type=radio]:disabled + label {
+	background: #efefef;
+	color: #666;
+}
 
 
 </style>

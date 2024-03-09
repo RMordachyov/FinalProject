@@ -13,7 +13,9 @@
                     <button href="#" class="delete-button" @click="deleteProductFromCart">Удалить</button>
                 </div>
                 <div class="product-list">
-                    <ProductCartComponent v-for="product in getCart" :product="product" :changeChecked="changeChecked"  @setSelectedOptions="setSelectedOptions" />
+                    <ProductCartComponent v-for="product in getCart" :product="product">
+                        <input type="checkbox" class="cart-product-card__select" :value="product.data.id" v-model="selectedOptions">
+                    </ProductCartComponent>
                 <p style="font-size: 19px;" v-if="showNoProduct">У вас пока нет товаров в корзине... Исправить это можно тут: <router-link :to="{path:'/', hash:'#categori_0'}" >Каталог товаров</router-link></p>
                 </div>
             </div>
@@ -58,7 +60,6 @@ export default{
         }
     },
     computed:{
-        
         ...mapGetters(['getCart']),
         ...mapGetters(['getTotalOrderPrice']),
         ...mapState(['categoriList']),
@@ -69,25 +70,18 @@ export default{
         showNoProduct(){
             return this.getCart[0] == undefined
         },
+        changeCheckedCo(){
+            return this.changeChecked
+        }
     },
     methods:{
-        setSelectedOptions(data){
-            if(data[1]){
-                this.selectedOptions.push(data[0])
-            }else{
-                let obj = this.selectedOptions.find(p => p == data[0]);
-                let objIndex = this.selectedOptions.indexOf(obj);
-                if(objIndex > -10){
-                    this.selectedOptions.splice(objIndex,1);
-                }
-            }
-        },
         selectAllProducts(){
             if(this.changeChecked){
                 this.changeChecked = false
                 this.selectedOptions.length=0;
             }else{
                 this.changeChecked = true
+                this.selectedOptions.length=0;
                 this.getCart.forEach(obj => {
                     this.selectedOptions.push(obj.id)
                 });
@@ -101,8 +95,6 @@ export default{
 
         deleteProductFromCart(e){
             this.$store.commit('deleteProductFromCart', this.selectedOptions)
-            this.changeChecked = true
-            this.changeChecked = false
             this.selectedOptions.length=0
         },
         getOrder(e){

@@ -21,7 +21,7 @@ export default{
   data(){
     return{
       exData: {},
-      categori:{}
+      categori:{},
     }
   },
   computed:{
@@ -32,11 +32,14 @@ export default{
     }
   },
   methods:{
-    
+    selectedOptions1(data){
+      console.log(data);
+      this.selectedOptions.push(data);
+    }
   },
   components:{
     CategoriProductsComponent,
-    Banner
+    Banner,
   }
 }
 </script>
