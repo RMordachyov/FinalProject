@@ -60,12 +60,9 @@
 .banner_button{
     padding: 8px 30px;
     border-radius: 6px;
-    /* margin-left: 30px; */
-    
     text-shadow: 2px 0px 2px #000;
     font-size: 18px;
     font-weight: 500;
-    box-shadow: 0 0px 3px #00000071;
     text-align: center;
 }
 
