@@ -15,7 +15,7 @@
 // import jsonData from '../assets/test.json'
 import { mapState, mapGetters } from 'vuex'
 import CategoriProductsComponent from '../components/CategoriProductsComponent.vue'
-import Banner from '../components/Banner.vue'
+import Banner from '../components/BannerComponent.vue'
 
 export default{
   data(){
@@ -70,4 +70,4 @@ export default{
         padding: 0px;
     }
 }
-</style>
+</style>../components/BannerComponent.vue
