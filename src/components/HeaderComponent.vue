@@ -60,7 +60,7 @@ export default{
     methods:{
         handleScroll (event) {
             var top = event.srcElement.scrollingElement.scrollTop
-            if(top > 250){
+            if(top > 250 && this.getProductCountInCart > 0){
                 this.showCartModalIcon = true
             }else{
                 this.showCartModalIcon = false
@@ -80,18 +80,26 @@ export default{
 <style scoped>
 .cart_goto{
   position: fixed;
-  bottom: 15%;
+  bottom: 10%;
   right: 20px;
   width: 50px;
   height: 50px;
   border: 1px solid lightgrey;
   border-radius: 50%;
   padding: 5px;
+  z-index: 200;
+  background-color: white;
 }
 
 .cart_goto img{
     width: 36px;
     height: 36px;
+}
+
+@media (min-width:320px) and (max-width:512px) {
+    .cart_goto{
+        left: 10px;
+    }
 }
 
 .header__tabs {

@@ -35,7 +35,6 @@
 .banner_container{
     position: absolute;
     padding: 10px;
-    
     border-radius: 10px;
     margin: 0 auto;
     left: 0;
@@ -71,38 +70,23 @@
         padding: 5px;
     }
 }
-@media  (max-width: 512px) {
-    .banner_button{
-        padding: 4px 20px;
-    }
-    .banner_buttons_container{
-        padding: 0px;
-        
-    }
-    .banner_buttons_container{
-        padding: 20px 0;
-        justify-content: center;
-    }
-    .banner_col{
-        width: 320px;
-        padding: 0;
-    }
-}
+
 @media (min-width:320px) and (max-width:512px) {
     .banner_buttons_container{
-        padding: 0px 0;
+        padding: 10px 0;
         justify-content: center;
     }
     .banner_col{
         width: 314px;
+        margin: 0 auto;
+        padding: 0;
+        left: 0;
+        right: 0;
+    }
+    .banner_container{
+        margin: 0;
     }
 }
 
-@media (max-width:320px){
-    .banner_col{
-        width: 314px;
-        left: 0;
-    }
-}
 
 </style>
